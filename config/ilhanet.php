@@ -1,0 +1,45 @@
+<?php
+
+return [
+    'defaultMandante' => 'ilhanet',
+    'defaultSiteName' => 'Funny Joke',
+    'defaultJokeName' => 'Joke',
+
+    //socialLogin configs
+    'socialLogin' => [
+        'availableProviders' => ['facebook','google'],
+
+        'google' => [
+            'scopes' => [
+                'https://www.googleapis.com/auth/userinfo.email',
+                'https://www.googleapis.com/auth/plus.me',
+                'https://www.googleapis.com/auth/userinfo.profile',
+            ],
+            'fields' => [],
+        ],
+        'facebook' => [
+            'scopes' => ['email','user_birthday','user_friends'],
+            'fields' => [
+                //public_profile
+                'id',
+                'name',
+                'first_name',
+                'last_name',
+                'age_range',
+                'link',
+                'gender',
+                'locale',
+                'picture',
+                'timezone',
+                'updated_time',
+                'verified',
+                //email
+                'email',
+                'birthday',
+                'friends',
+            ],
+        ],
+    ],
+
+
+];
