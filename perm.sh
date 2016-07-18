@@ -1,12 +1,16 @@
 #!/bin/sh
-chgrp www-data -R storage/
-chmod -R g+w storage/
-chmod -R u+w storage/
-chmod -R o-w ./
+
+chgrp www-data database/database.sqlite
+chmod g+w www-data database/database.sqlite
 
 chmod -R o+r public/
 find public/ -type d -exec chmod o+x {} \;
 setfacl -dR -m o::rx public/
+
+chgrp www-data -R storage/
+chmod -R g+w storage/
+chmod -R u+w storage/
+chmod -R o-w ./
 
 find storage/ -type f -exec chmod u-x {} \;
 find storage/ -type d -exec chmod u+x {} \;
