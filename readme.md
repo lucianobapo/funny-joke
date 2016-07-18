@@ -1,4 +1,6 @@
+ssh luciano_bapo@funny-joke.ilhanet.com
 
+rsync -rvztPhe ssh .env luciano_bapo@funny-joke.ilhanet.com:code/funny-joke/.env
 
 # Laravel PHP Framework
 
