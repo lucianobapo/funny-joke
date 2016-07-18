@@ -1,7 +1,7 @@
 #!/bin/sh
 
 chgrp www-data database/database.sqlite
-chmod g+w www-data database/database.sqlite
+chmod g+w database/database.sqlite
 
 chmod -R o+r public/
 find public/ -type d -exec chmod o+x {} \;
