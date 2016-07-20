@@ -2,6 +2,9 @@ ssh luciano_bapo@funny-joke.ilhanet.com
 
 rsync -rvztPhe ssh .env.production luciano_bapo@funny-joke.ilhanet.com:code/funny-joke/.env
 
+The provided 'og:image' properties are not yet available because new images are processed asynchronously. 
+To ensure shares of new URLs include an image, specify the dimensions using 'og:image:width' and 'og:image:height' tags. 
+
 # Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)

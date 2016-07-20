@@ -11,6 +11,8 @@
 
     <meta property="og:type" content="article">
     <meta property="og:image" content="{{ url('') }}/file/{{ $joke->file }}">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="420">
     <meta property="og:title" content="{{ $joke->title }}">
     <meta property="og:description" content="{{ $joke->description }}">
 
