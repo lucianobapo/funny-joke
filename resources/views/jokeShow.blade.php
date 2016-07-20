@@ -43,7 +43,7 @@
                          data-layout="button_count" data-size="large"
                          data-mobile-iframe="true">
                         <a class="fb-xfbml-parse-ignore" target="_blank"
-                           href="https://www.facebook.com/sharer/sharer.php?u={{ url($_SERVER['REQUEST_URI']) }}&amp;src=sdkpreparse">
+                           href="https://www.facebook.com/sharer/sharer.php?u={{ url($_SERVER['REQUEST_URI']) }}&amp;src=sdkpreparse&amp;picture={{ url('') }}/file/{{ $joke->file }}">
                             Compartilhar
                         </a>
                     </div>
