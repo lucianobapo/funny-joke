@@ -31,11 +31,11 @@
                     <p><em>{{ $joke->description }}</em></p>
                     @if(isset($joke->file))
                         {{--{{ link_to_route('file.show', $joke->file, ['file'=>$joke->file]) }}--}}
-                        <div>
-                            <img src="/file/{{ $joke->file }}">
-                        </div>
+                        <p>
+                            <img class="img-responsive" src="/file/{{ $joke->file }}">
+                        </p>
                     @else
-                        <em>Sem Imagem</em>
+                        <div class="well"><em>Sem Imagem</em></div>
                     @endif
 
                     <div class="fb-share-button"
