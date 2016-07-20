@@ -19,17 +19,38 @@ class JokeController extends Controller
      */
     public function index(JokeService $jokeService)
     {
+        $fields = $jokeService->getFillableFields();
+        foreach($fields as $key => $field){
+            if ($field=='file'){
+                $fields[$key]=[
+                    'name' => 'file',
+                    'component' => 'customFile',
+                ];
+            };
+        }
         return view('dataIndex')->with([
             'data' => $jokeService->getAll(),
             'dataModelInstance' => $jokeService->dataModelInstance(),
-            'routePrefix' => 'mandante',
-            'fields' => $jokeService->getFillableFields(),
+            'routePrefix' => 'joke',
+            'fields' => [
+                [
+                    'name' => 'title',
+                    'label' => app('trans',['Title']),
+                    'component' => 'customText',
+                ],
+                [
+                    'name' => 'description',
+                    'label' => app('trans',['Description']),
+                    'component' => 'customText',
+                ],
+                [
+                    'name' => 'file',
+                    'label' => app('trans',['File']),
+                    'component' => 'customFile',
+                ],
+            ],
             'customFormAttr' => ['files'=>true],
         ]);
-
-//        return view('joke')->with([
-//            'jokes' => $jokeService->getAll(),
-//        ]);
     }
 
     /**
@@ -39,7 +60,7 @@ class JokeController extends Controller
      */
     public function create()
     {
-        //
+        abort(403);
     }
 
     /**
@@ -50,12 +71,9 @@ class JokeController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function store(Request $request, FileManager $fileManager)
+    public function store(Request $request, FileManager $fileManager, JokeService $jokeService)
     {
-        $this->validate($request, [
-            'title' => 'required|unique:jokes|max:255',
-            'file' => 'required',
-        ]);
+        $this->validate($request, $jokeService->getValidationRules());
 
         $fields = $request->all();
         $fields['titleSlug'] = str_slug($fields['title']);

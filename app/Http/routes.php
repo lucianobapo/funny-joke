@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/phpinfo', function () {
+    return phpinfo();
+});
 
 Route::get('auth/{provider}', ['as'=>'auth.redirect', 'uses'=>'Auth\AuthController@redirectToProvider']);
 Route::get('auth/{provider}/callback', ['as'=>'auth.callback', 'uses'=>'Auth\AuthController@handleProviderCallback']);
@@ -23,6 +26,7 @@ Route::resource('mandante', 'MandanteController');
 Route::resource('joke', 'JokeController');
 
 Route::get('/file/{file}', ['as'=>'file.show', 'uses'=>'FileController@show']);
+Route::get('/fileFit/{size}/{file}', ['as'=>'file.fit', 'uses'=>'FileController@fit']);
 
 Route::auth();
 

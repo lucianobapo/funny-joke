@@ -12,4 +12,8 @@ class FileController extends Controller
     public function show($file, FileManager $fileManager){
         return $fileManager->loadImageFile($file, 'jokes');
     }
+
+    public function fit($size, $file, FileManager $fileManager){
+        return $fileManager->loadImageFileFit($size, $file, 'jokes');
+    }
 }

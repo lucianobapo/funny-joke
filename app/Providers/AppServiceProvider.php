@@ -14,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \Form::component('bsText', 'components.form.text',
+        \Form::component('customText', 'components.form.text',
+            ['name', 'label' => null, 'value' => null, 'attributes' => []]);
+        \Form::component('customFile', 'components.form.file',
             ['name', 'label' => null, 'value' => null, 'attributes' => []]);
     }
 
@@ -27,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind('mandante', function () {
             return new \App\Services\MandanteService(new \App\Mandante);
+        });
+        $this->app->bind('trans', function ($app, $params) {
+//            dd(func_get_args());
+            return trans('general.'.$params[0], isset($params[1])?$params[1]:[]);
         });
     }
 }

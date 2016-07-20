@@ -21,10 +21,14 @@
                             <h2>Lista de Registros:</h2>
                             @forelse(isset($data)?$data:[] as $item)
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Código: {{ $item->id }}</div>
+                                    <div class="panel-heading">{{ app('trans',['Code']) }}: {{ $item->id }}</div>
                                     <div class="panel-body">
-                                        @foreach(isset($fields)?$fields:[] as $field)
-                                            <p>{{ ucfirst($field) }}: {{ $item->$field }}</p>
+                                        @foreach(isset($fields)?$fields:[] as $key => $field)
+                                            @if(is_string($field))
+                                                <p>{{ ucfirst($field) }}: {{ $item->$field }}</p>
+                                            @elseif(is_array($field))
+                                                <p>{{ isset($field['label'])?$field['label']:ucfirst($field['name']) }}: {{ $item[$field['name']] }}</p>
+                                            @endif
                                         @endforeach
                                     </div>
                                 </div>
@@ -38,7 +42,10 @@
                                     {{--</li>--}}
                                 {{--</ul>--}}
                             @empty
-                                <em>Sem registros</em>
+                                <div class="well">
+                                    <em>Sem registros</em>
+                                </div>
+
                             @endforelse
 
                             {!! get_class($data)==Illuminate\Pagination\LengthAwarePaginator::class?$data->render():'' !!}
@@ -48,8 +55,16 @@
                                     'route' => isset($dataModel)?[$routePrefix.'.update', $dataModel->id]:
                                         [$routePrefix.'.store']]) !!}
 
-                                @foreach(isset($fields)?$fields:[] as $field)
-                                    {{ Form::bsText($field) }}
+                                @foreach(isset($fields)?$fields:[] as $key => $field)
+                                    @if(is_string($field))
+                                        {{ Form::customText($field) }}
+                                    @elseif(is_array($field))
+                                        {{ forward_static_call(
+                                            ['Form',$field['component']],
+                                            $field['name'],
+                                            isset($field['label'])?$field['label']:null
+                                            ) }}
+                                    @endif
                                 @endforeach
 
                                 <!-- Enviar Form Input -->

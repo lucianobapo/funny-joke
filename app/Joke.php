@@ -11,9 +11,19 @@ class Joke extends Model
 
     protected $fillable = [
         'title',
+        'description',
         'titleSlug',
         'file',
     ];
+
+    protected $validationRules = [
+        'title' => 'required|unique:jokes|max:255',
+        'file' => 'required',
+    ];
+
+    public function getValidationRules(){
+        return $this->validationRules;
+    }
 
     /**
      * Get the route key for the model.

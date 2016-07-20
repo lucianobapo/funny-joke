@@ -46,13 +46,22 @@ class MandanteService
     public function getSiteName(){
         if(\Auth::guest()) return config('ilhanet.defaultSiteName');
         else {
-            return $this->mandante->where(['mandante'=>\Auth::user()->mandante])->first()->siteName;
+            $siteName = $this->mandante->where(['mandante'=>\Auth::user()->mandante])->first();
+            if (isset($siteName->siteName))
+                return $siteName->siteName;
+            else
+                return config('ilhanet.defaultSiteName');
+
         }
     }
     public function getJokeName(){
         if(\Auth::guest()) return config('ilhanet.defaultJokeName');
         else {
-            return $this->mandante->where(['mandante'=>\Auth::user()->mandante])->first()->jokeName;
+            $jokeName = $this->mandante->where(['mandante'=>\Auth::user()->mandante])->first();
+            if (isset($jokeName->jokeName))
+                return $jokeName->jokeName;
+            else
+                return config('ilhanet.defaultJokeName');
         }
     }
 }

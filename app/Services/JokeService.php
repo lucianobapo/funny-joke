@@ -27,6 +27,11 @@ class JokeService
         return $this->joke->getFillable();
     }
 
+    public function getValidationRules()
+    {
+        return $this->joke->getValidationRules();
+    }
+
     public function dataModelInstance()
     {
         return $this->joke;
