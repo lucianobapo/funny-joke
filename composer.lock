@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.18.31",
+            "version": "3.18.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "dad0b7db5fa8f3c7a3805efb2a1e86a50f11fe8b"
+                "reference": "84b9927ee116b30babf90a9fc723764672543e29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/dad0b7db5fa8f3c7a3805efb2a1e86a50f11fe8b",
-                "reference": "dad0b7db5fa8f3c7a3805efb2a1e86a50f11fe8b",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/84b9927ee116b30babf90a9fc723764672543e29",
+                "reference": "84b9927ee116b30babf90a9fc723764672543e29",
                 "shasum": ""
             },
             "require": {
@@ -85,7 +85,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-07-19 17:25:45"
+            "time": "2016-07-21 22:30:58"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -547,17 +547,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucianobapo/erpnet-file-manager.git",
-                "reference": "3c0be5d0230f466e5e168437870628428a37ba76"
+                "reference": "655ca4eca6fc60de610780e796590d197ca17ea3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucianobapo/erpnet-file-manager/zipball/3c0be5d0230f466e5e168437870628428a37ba76",
-                "reference": "3c0be5d0230f466e5e168437870628428a37ba76",
+                "url": "https://api.github.com/repos/lucianobapo/erpnet-file-manager/zipball/655ca4eca6fc60de610780e796590d197ca17ea3",
+                "reference": "655ca4eca6fc60de610780e796590d197ca17ea3",
                 "shasum": ""
             },
             "require": {
                 "illuminate/http": "^5.2",
                 "intervention/image": "^2.3",
+                "intervention/imagecache": "^2.3",
                 "league/flysystem-aws-s3-v3": "^1.0",
                 "php": ">=5.5.9"
             },
@@ -577,7 +578,7 @@
                     "email": "luciano.bapo@gmail.com"
                 }
             ],
-            "time": "2016-07-19 20:57:06"
+            "time": "2016-07-22 06:00:37"
         },
         {
             "name": "intervention/image",
@@ -640,6 +641,59 @@
                 "watermark"
             ],
             "time": "2016-04-26 14:08:40"
+        },
+        {
+            "name": "intervention/imagecache",
+            "version": "2.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Intervention/imagecache.git",
+                "reference": "7936b90e695daee1aafbd25221815352ef97bcbc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Intervention/imagecache/zipball/7936b90e695daee1aafbd25221815352ef97bcbc",
+                "reference": "7936b90e695daee1aafbd25221815352ef97bcbc",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/cache": "~4|~5",
+                "illuminate/filesystem": "~4|~5",
+                "intervention/image": "dev-master|~2,>=2.2.0",
+                "jeremeamia/superclosure": "~1|~2",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.2",
+                "phpunit/phpunit": "3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Intervention\\Image\\": "src/Intervention/Image"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Vogel",
+                    "email": "oliver@olivervogel.net",
+                    "homepage": "http://olivervogel.net/"
+                }
+            ],
+            "description": "Caching extension for the Intervention Image Class",
+            "homepage": "http://image.intervention.io",
+            "keywords": [
+                "cache",
+                "gd",
+                "image",
+                "imagick",
+                "laravel"
+            ],
+            "time": "2015-09-22 15:22:47"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -788,16 +842,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.2.40",
+            "version": "5.2.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "6195211140ed0881e89d79a296f893abc56987be"
+                "reference": "29ba2e310cfeb42ab6545bcd81ff4c2ec1f6b5c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/6195211140ed0881e89d79a296f893abc56987be",
-                "reference": "6195211140ed0881e89d79a296f893abc56987be",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/29ba2e310cfeb42ab6545bcd81ff4c2ec1f6b5c2",
+                "reference": "29ba2e310cfeb42ab6545bcd81ff4c2ec1f6b5c2",
                 "shasum": ""
             },
             "require": {
@@ -914,7 +968,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-07-19 19:46:25"
+            "time": "2016-07-20 13:13:06"
         },
         {
             "name": "laravel/socialite",
@@ -3248,16 +3302,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.26",
+            "version": "4.8.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "fc1d8cd5b5de11625979125c5639347896ac2c74"
+                "reference": "c062dddcb68e44b563f66ee319ddae2b5a322a90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fc1d8cd5b5de11625979125c5639347896ac2c74",
-                "reference": "fc1d8cd5b5de11625979125c5639347896ac2c74",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c062dddcb68e44b563f66ee319ddae2b5a322a90",
+                "reference": "c062dddcb68e44b563f66ee319ddae2b5a322a90",
                 "shasum": ""
             },
             "require": {
@@ -3316,7 +3370,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-05-17 03:09:28"
+            "time": "2016-07-21 06:48:14"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

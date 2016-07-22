@@ -25,6 +25,9 @@ Route::resource('mandante', 'MandanteController');
 
 Route::resource('joke', 'JokeController');
 
+Route::get('/jokeMake/{id}/{joke}', ['as'=>'joke.jokeMake', 'uses'=>'JokeController@jokeMake']);
+
+Route::get('/fileJoke/{id}/{params?}/{file}', ['as'=>'file.showJoke', 'uses'=>'FileController@showJoke']);
 Route::get('/file/{file}', ['as'=>'file.show', 'uses'=>'FileController@show']);
 Route::get('/fileFit/{size}/{file}', ['as'=>'file.fit', 'uses'=>'FileController@fit']);
 

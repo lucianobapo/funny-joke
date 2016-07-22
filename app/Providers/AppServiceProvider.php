@@ -16,6 +16,8 @@ class AppServiceProvider extends ServiceProvider
     {
         \Form::component('customText', 'components.form.text',
             ['name', 'label' => null, 'value' => null, 'attributes' => []]);
+        \Form::component('customCheckbox', 'components.form.checkbox',
+            ['name', 'label' => null, 'value' => null, 'attributes' => [], 'checked' => false]);
         \Form::component('customFile', 'components.form.file',
             ['name', 'label' => null, 'value' => null, 'attributes' => []]);
     }

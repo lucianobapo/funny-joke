@@ -9,11 +9,22 @@ use App\Http\Requests;
 
 class FileController extends Controller
 {
-    public function show($file, FileManager $fileManager){
-        return $fileManager->loadImageFile($file, 'jokes');
+    private $fileManager;
+
+    public function __construct(FileManager $fileManager){
+        $this->fileManager = $fileManager;
     }
 
-    public function fit($size, $file, FileManager $fileManager){
-        return $fileManager->loadImageFileFit($size, $file, 'jokes');
+    public function show($file){
+        return $this->fileManager->loadImageFile($file, 'jokes');
+    }
+
+    public function showJoke($id, $params = [], $file){
+        if (is_string($params)) $params = unserialize(urldecode($params));
+        return $this->fileManager->insertSocialProfileWithBgImage($file, $id, $params, 'jokes')->response();
+    }
+
+    public function fit($size, $file){
+        return $this->fileManager->loadImageFileFit($size, $file, 'jokes');
     }
 }

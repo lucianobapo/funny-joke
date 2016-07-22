@@ -62,7 +62,9 @@
                                         {{ forward_static_call(
                                             ['Form',$field['component']],
                                             $field['name'],
-                                            isset($field['label'])?$field['label']:null
+                                            isset($field['label'])?$field['label']:null,
+                                            isset($field['value'])?$field['value']:null,
+                                            isset($field['attributes'])?$field['attributes']:null
                                             ) }}
                                     @endif
                                 @endforeach

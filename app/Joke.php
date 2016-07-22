@@ -14,6 +14,14 @@ class Joke extends Model
         'description',
         'titleSlug',
         'file',
+        'paramProfileImageSize',
+        'paramProfileImageX',
+        'paramProfileImageY',
+        'paramName',
+        'paramNameSize',
+        'paramNameColor',
+        'paramNameX',
+        'paramNameY',
     ];
 
     protected $validationRules = [

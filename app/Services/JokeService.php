@@ -36,4 +36,15 @@ class JokeService
     {
         return $this->joke;
     }
+
+    public function saveOrFail($fields)
+    {
+        $filteredFields = [];
+        foreach ($fields as $key => $value) {
+            if (!empty($fields[$key])) $filteredFields[$key] = $value;
+        }
+
+        $model = $this->joke->newInstance($filteredFields);
+        return $model->saveOrFail();
+    }
 }
