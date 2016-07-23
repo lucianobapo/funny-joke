@@ -547,12 +547,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucianobapo/erpnet-file-manager.git",
-                "reference": "655ca4eca6fc60de610780e796590d197ca17ea3"
+                "reference": "ed15f38bde8e7e7f32e9b36a0603335c504d36e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucianobapo/erpnet-file-manager/zipball/655ca4eca6fc60de610780e796590d197ca17ea3",
-                "reference": "655ca4eca6fc60de610780e796590d197ca17ea3",
+                "url": "https://api.github.com/repos/lucianobapo/erpnet-file-manager/zipball/ed15f38bde8e7e7f32e9b36a0603335c504d36e6",
+                "reference": "ed15f38bde8e7e7f32e9b36a0603335c504d36e6",
                 "shasum": ""
             },
             "require": {
@@ -578,7 +578,7 @@
                     "email": "luciano.bapo@gmail.com"
                 }
             ],
-            "time": "2016-07-22 06:00:37"
+            "time": "2016-07-23 05:55:57"
         },
         {
             "name": "intervention/image",

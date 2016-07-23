@@ -46,7 +46,82 @@ class JokeController extends Controller
                 ],
                 [
                     'name' => 'file',
-                    'label' => app('trans',['File']),
+                    'label' => 'Imagem Antes do Teste',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file1',
+                    'label' => 'Imagem Aleatória do Teste 1',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file2',
+                    'label' => 'Imagem Aleatória do Teste 2',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file3',
+                    'label' => 'Imagem Aleatória do Teste 3',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file4',
+                    'label' => 'Imagem Aleatória do Teste 4',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file5',
+                    'label' => 'Imagem Aleatória do Teste 5',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file6',
+                    'label' => 'Imagem Aleatória do Teste 6',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file7',
+                    'label' => 'Imagem Aleatória do Teste 7',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file8',
+                    'label' => 'Imagem Aleatória do Teste 8',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file9',
+                    'label' => 'Imagem Aleatória do Teste 9',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file10',
+                    'label' => 'Imagem Aleatória do Teste 10',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file11',
+                    'label' => 'Imagem Aleatória do Teste 11',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file12',
+                    'label' => 'Imagem Aleatória do Teste 12',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file13',
+                    'label' => 'Imagem Aleatória do Teste 13',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file14',
+                    'label' => 'Imagem Aleatória do Teste 14',
+                    'component' => 'customFile',
+                ],
+                [
+                    'name' => 'file15',
+                    'label' => 'Imagem Aleatória do Teste 15',
                     'component' => 'customFile',
                 ],
                 [
@@ -127,10 +202,16 @@ class JokeController extends Controller
 
         $fields = $request->all();
         $fields['titleSlug'] = str_slug($fields['title']);
+        $files = $request->allFiles();
 
-        if (($fields['file'] = $fileManager->saveFile($request->file('file'), 'jokes'))!==false) {
-            if($jokeService->saveOrFail($fields)) return redirect(route('joke.index'));
-        } else throw new \Exception('Erro no Upload');
+        foreach ($files as $key => $value) {
+            $fields[$key] = $fileManager->saveFile($request->file($key), 'jokes');
+        }
+        if($jokeService->saveOrFail($fields)) return redirect(route('joke.index'));
+
+//        if (($fields['file'] = $fileManager->saveFile($request->file('file'), 'jokes'))!==false) {
+//            if($jokeService->saveOrFail($fields)) return redirect(route('joke.index'));
+//        } else throw new \Exception('Erro no Upload');
     }
 
     /**
@@ -155,8 +236,34 @@ class JokeController extends Controller
      */
     public function jokeMake($id, $joke)
     {
-//        $id = Auth::user()->provider_id;
-        $file = $joke->file;
+        $imagem = [
+            'file1',
+            'file2',
+            'file3',
+            'file4',
+            'file5',
+            'file6',
+            'file7',
+            'file8',
+            'file9',
+            'file10',
+            'file11',
+            'file12',
+            'file13',
+            'file14',
+            'file15',
+        ];
+
+        $imagemFiltred = [];
+        foreach ($imagem as $item) {
+            if (!empty($joke[$item])) {
+                $imagemFiltred[] = $item;
+            }
+        }
+        $aleatorio = rand(0,count($imagemFiltred)-1);
+        $file = $joke[$imagemFiltred[$aleatorio]];
+
+//        $file = $joke->file;
         $params = [];
         if ($joke->paramName) {
             $params['name'] = Auth::user()->name;
