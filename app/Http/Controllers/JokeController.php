@@ -260,11 +260,13 @@ class JokeController extends Controller
                 $imagemFiltred[] = $item;
             }
         }
-        $aleatorio = rand(0,count($imagemFiltred)-1);
-        dd($imagemFiltred);
-        $file = $joke[$imagemFiltred[$aleatorio]];
 
-//        $file = $joke->file;
+        if (count($imagemFiltred)>0){
+            $aleatorio = rand(0,count($imagemFiltred)-1);
+            $file = $joke[$imagemFiltred[$aleatorio]];
+        } else
+            $file = $joke->file;
+
         $params = [];
         if ($joke->paramName) {
             $params['name'] = Auth::user()->name;
