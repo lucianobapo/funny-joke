@@ -261,6 +261,7 @@ class JokeController extends Controller
             }
         }
         $aleatorio = rand(0,count($imagemFiltred)-1);
+        dd($imagemFiltred);
         $file = $joke[$imagemFiltred[$aleatorio]];
 
 //        $file = $joke->file;
