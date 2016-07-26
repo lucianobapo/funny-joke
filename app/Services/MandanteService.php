@@ -64,4 +64,19 @@ class MandanteService
                 return config('ilhanet.defaultJokeName');
         }
     }
+
+    public function getUpdateValidationRules()
+    {
+        return $this->mandante->getUpdateValidationRules();
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $selectedModel
+     * @param $fields
+     * @return mixed
+     */
+    public function updateOrFail($selectedModel, $fields)
+    {
+        return $selectedModel->update($fields);
+    }
 }

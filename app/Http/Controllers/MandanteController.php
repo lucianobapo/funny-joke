@@ -21,6 +21,7 @@ class MandanteController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param MandanteService $mandanteService
      * @return \Illuminate\Http\Response
      */
     public function index(MandanteService $mandanteService)
@@ -30,7 +31,10 @@ class MandanteController extends Controller
             'dataModelInstance' => $mandanteService->dataModelInstance(),
             'routePrefix' => 'mandante',
             'fields' => $mandanteService->getFillableFields(),
-            'customFormAttr' => ['files'=>false],
+            'customFormAttr' => [
+                'route' => ['mandante.store'],
+                'files'=>false,
+            ],
         ]);
 
     }
@@ -42,7 +46,7 @@ class MandanteController extends Controller
      */
     public function create()
     {
-        //
+        abort(403);
     }
 
     /**
@@ -70,40 +74,59 @@ class MandanteController extends Controller
      */
     public function show($id)
     {
-        //
+        abort(403);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param \Illuminate\Database\Eloquent\Model $selectedModel
+     * @param MandanteService $mandanteService
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($selectedModel, MandanteService $mandanteService)
     {
-        //
+        return view('dataIndex')->with([
+            'data' => $mandanteService->getAll(),
+            'dataModel' => $selectedModel,
+            'routePrefix' => 'mandante',
+            'fields' => $mandanteService->getFillableFields(),
+            'customFormAttr' => [
+                'route' => ['mandante.update', 'mandante'=>$selectedModel],
+                'files'=>false,
+                'method' => 'PATCH',
+            ],
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Database\Eloquent\Model $selectedModel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $selectedModel, MandanteService $mandanteService)
     {
-        //
+        $this->validate($request, $mandanteService->getUpdateValidationRules());
+
+        if($mandanteService->updateOrFail($selectedModel, $request->all()))
+            return redirect(route('mandante.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Request $request
+     * @param  \Illuminate\Database\Eloquent\Model $selectedModel
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Request $request, $selectedModel)
     {
-        //
+        if ($request->method()=='DELETE' && $selectedModel->delete()===true)
+            return redirect(route('mandante.index'));
+        else
+            throw new \Exception('Erro no Delete');
     }
 }

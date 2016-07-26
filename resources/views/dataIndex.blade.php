@@ -25,9 +25,11 @@
                                     <div class="panel-body">
                                         @if(!Auth::guest())
                                             <div class="pull-right">
-                                                {{ link_to_route('joke.edit', 'Editar', ['#form','joke'=>$item[$item->getRouteKeyName()]], ['class'=>'btn btn-primary']) }}
-
-                                                <a href="" class="btn btn-primary">Apagar</a>
+                                                {{ link_to_route($routePrefix.'.edit', 'Editar', ['#form', $routePrefix=>$item[$item->getRouteKeyName()]], ['class'=>'btn btn-primary']) }}
+                                                {{ Form::open(['style'=> 'display: inline-block;', 'method' => 'DELETE', 'route' => [$routePrefix.'.destroy', $item[$item->getRouteKeyName()]] ]) }}
+                                                    {{ Form::submit('Apagar',['class'=>'btn btn-danger']) }}
+                                                {{ Form::close() }}
+{{--                                                {{ link_to_route($routePrefix.'.destroy', 'Apagar', [$routePrefix=>$item[$item->getRouteKeyName()]], ['class'=>'btn btn-danger']) }}--}}
                                             </div>
                                         @endif
                                         @foreach(isset($fields)?$fields:[] as $key => $field)

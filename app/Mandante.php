@@ -21,7 +21,17 @@ class Mandante extends Model
         'jokeName' => 'required',
     ];
 
+    protected $updateValidationRules = [
+        'mandante' => 'required|max:255',
+    ];
+
+
     public function getValidationRules(){
         return $this->validationRules;
+    }
+
+    public function getUpdateValidationRules()
+    {
+        return $this->updateValidationRules;
     }
 }

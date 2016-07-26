@@ -46,7 +46,6 @@ class Joke extends Model
 
     protected $updateValidationRules = [
         'title' => 'required|max:255',
-//        'file' => 'required',
     ];
 
     public function getValidationRules(){
