@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Joke;
 use App\Services\JokeService;
+use App\Services\UserService;
 use ErpNET\FileManager\FileManager;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -18,7 +19,7 @@ class JokeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth', ['except' => ['index', 'show', 'jokeMake']]);
     }
 
     /**
@@ -99,9 +100,9 @@ class JokeController extends Controller
                 'joke'=>$joke[$joke->getRouteKeyName()],
             ], ['class'=>'btn btn-primary ']);
         }
-        $file = $joke->file;
+
         return view('jokeShow', compact('joke', 'jokeMakeButton'))->with([
-            'fileName' => "/file/$file",
+            'fileName' => "/file/".$joke->file,
         ]);
     }
 
@@ -110,52 +111,36 @@ class JokeController extends Controller
      *
      * @param int $id
      * @param  \App\Joke $joke
+     * @param UserService $userService
      * @return \Illuminate\Http\Response
      */
-    public function jokeMake($id, $joke)
+    public function jokeMake($id, $joke, UserService $userService, $params=null)
     {
-        $imagem = [
-            'file1', 'file2', 'file3', 'file4',
-            'file5', 'file6', 'file7', 'file8',
-            'file9', 'file10', 'file11', 'file12',
-            'file13', 'file14', 'file15',
-        ];
-
-        $imagemFiltred = [];
-        foreach ($imagem as $item) {
-            if (!empty($joke[$item])) {
-                $imagemFiltred[] = $item;
-            }
-        }
-
-        if (count($imagemFiltred)>0){
-            $aleatorio = rand(0,count($imagemFiltred)-1);
-            $file = $joke[$imagemFiltred[$aleatorio]];
-        } else
-            $file = $joke->file;
-
-        $params = [];
-        if ($joke->paramName) {
-            $params['name'] = Auth::user()->name;
-            if (!empty($joke->paramNameSize)) $params['namesize'] = $joke->paramNameSize;
-            if (!empty($joke->paramNameColor)) $params['namecolor'] = $joke->paramNameColor;
-            if (!empty($joke->paramNameX)) $params['namex'] = $joke->paramNameX;
-            if (!empty($joke->paramNameY)) $params['namey'] = $joke->paramNameY;
-        }
-
-        if (!empty($joke->paramProfileImageSize)) $params['size'] = $joke->paramProfileImageSize;
-        if (!empty($joke->paramProfileImageX)) $params['x'] = $joke->paramProfileImageX;
-        if (!empty($joke->paramProfileImageY)) $params['y'] = $joke->paramProfileImageY;
-
-        if (!Auth::guest()) {
+        if (Auth::guest()) {
+            $jokeMakeButton = link_to_route('auth.redirect', 'Login no Facebook para Fazer Testes', ['provider'=>'facebook'], ['class'=>'btn btn-primary']);
+        } else {
             $jokeMakeButton = link_to_route('joke.jokeMake', 'Refazer Teste', [
-                'id'=>Auth::user()->provider_id,
+                'id'=>$id,
                 'joke'=>$joke[$joke->getRouteKeyName()],
             ], ['class'=>'btn btn-primary ']);
         }
-        return view('jokeShow', compact('joke', 'jokeMakeButton'))->with([
-            'fileName' => "/fileJoke/$id/".urlencode(serialize($params)).'/'.$file,
-        ]);
+
+        if (is_null($params)){
+            $file = $this->getRandomImage($joke, [
+                'file1', 'file2', 'file3', 'file4',
+                'file5', 'file6', 'file7', 'file8',
+                'file9', 'file10', 'file11', 'file12',
+                'file13', 'file14', 'file15',
+            ]);
+            $params = $this->getParamsForJoke($joke, $userService->findFirst(['provider_id'=>$id])->name);
+            return view('jokeShow', compact('joke', 'jokeMakeButton'))->with([
+                'fileName' => "/fileJoke/$id/".urlencode(serialize($params)).'/'.$file,
+            ]);
+        } else {
+            return view('jokeShow', compact('joke', 'jokeMakeButton'))->with([
+                'fileName' => "/file/".urlencode(serialize($params)),
+            ]);
+        }
     }
 
     /**
@@ -376,5 +361,39 @@ class JokeController extends Controller
                 'component' => 'customText',
             ],
         ];
+    }
+
+    private function getRandomImage($joke, $imagem)
+    {
+        $imagemFiltred = [];
+        foreach ($imagem as $item) {
+            if (!empty($joke[$item])) {
+                $imagemFiltred[] = $item;
+            }
+        }
+
+        if (count($imagemFiltred)>0){
+            $aleatorio = rand(0,count($imagemFiltred)-1);
+            return $joke[$imagemFiltred[$aleatorio]];
+        } else
+            return $joke->file;
+    }
+
+    private function getParamsForJoke($joke, $name)
+    {
+        $params = [];
+        if ($joke->paramName) {
+            $params['name'] = $name;
+            if (!empty($joke->paramNameSize)) $params['namesize'] = $joke->paramNameSize;
+            if (!empty($joke->paramNameColor)) $params['namecolor'] = $joke->paramNameColor;
+            if (!empty($joke->paramNameX)) $params['namex'] = $joke->paramNameX;
+            if (!empty($joke->paramNameY)) $params['namey'] = $joke->paramNameY;
+        }
+
+        if (!empty($joke->paramProfileImageSize)) $params['size'] = $joke->paramProfileImageSize;
+        if (!empty($joke->paramProfileImageX)) $params['x'] = $joke->paramProfileImageX;
+        if (!empty($joke->paramProfileImageY)) $params['y'] = $joke->paramProfileImageY;
+
+        return $params;
     }
 }
