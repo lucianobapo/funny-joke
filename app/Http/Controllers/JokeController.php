@@ -100,8 +100,10 @@ class JokeController extends Controller
                 'joke'=>$joke[$joke->getRouteKeyName()],
             ], ['class'=>'btn btn-primary ']);
         }
-        $shareUrl = url($_SERVER['REQUEST_URI']);
-        return view('jokeShow', compact('joke', 'jokeMakeButton', 'shareUrl'))->with([
+
+        return view('jokeShow', compact('joke', 'jokeMakeButton'))->with([
+            'likeUrl' => url($_SERVER['REQUEST_URI']),
+            'shareUrl' => url($_SERVER['REQUEST_URI']),
             'fileName' => "/file/".$joke->file,
         ]);
     }
@@ -122,7 +124,6 @@ class JokeController extends Controller
             $jokeMakeButton = link_to_route('joke.jokeMake', 'Refazer Teste', [
                 'id'=>$id,
                 'joke'=>$joke[$joke->getRouteKeyName()],
-//                'file'=>$file,
             ], ['class'=>'btn btn-primary ']);
         }
 
@@ -134,9 +135,11 @@ class JokeController extends Controller
                 'file13', 'file14', 'file15',
             ]);
         }
-        $shareUrl = url($_SERVER['REQUEST_URI']).'/'.$file;
+
         $params = $this->getParamsForJoke($joke, $userService->findFirst(['provider_id'=>$id])->name);
-        return view('jokeShow', compact('joke', 'jokeMakeButton', 'shareUrl'))->with([
+        return view('jokeShow', compact('joke', 'jokeMakeButton'))->with([
+            'likeUrl' => url($_SERVER['REQUEST_URI']),
+            'shareUrl' => url($_SERVER['REQUEST_URI']).'/'.$file,
             'fileName' => "/fileJoke/$id/".urlencode(serialize($params)).'/'.$file,
         ]);
     }
