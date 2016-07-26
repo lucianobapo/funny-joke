@@ -11,12 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@welcome');
+
+Route::get('/home', 'HomeController@index');
+
 Route::get('/phpinfo', function () {
     return phpinfo();
 });
+
+Route::auth();
 
 Route::get('auth/{provider}', ['as'=>'auth.redirect', 'uses'=>'Auth\AuthController@redirectToProvider']);
 Route::get('auth/{provider}/callback', ['as'=>'auth.callback', 'uses'=>'Auth\AuthController@handleProviderCallback']);
@@ -31,6 +34,4 @@ Route::get('/fileJoke/{id}/{params?}/{file}', ['as'=>'file.showJoke', 'uses'=>'F
 Route::get('/file/{file}', ['as'=>'file.show', 'uses'=>'FileController@show']);
 Route::get('/fileFit/{size}/{file}', ['as'=>'file.fit', 'uses'=>'FileController@fit']);
 
-Route::auth();
 
-Route::get('/home', 'HomeController@index');

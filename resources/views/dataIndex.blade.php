@@ -23,11 +23,28 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">{{ app('trans',['Code']) }}: {{ $item->id }}</div>
                                     <div class="panel-body">
+                                        <div class="pull-right">
+                                            {{ link_to_route('joke.edit', 'Editar', ['#form','joke'=>$item[$item->getRouteKeyName()]], ['class'=>'btn btn-primary']) }}
+
+                                            <a href="" class="btn btn-primary">Apagar</a>
+                                        </div>
                                         @foreach(isset($fields)?$fields:[] as $key => $field)
-                                            @if(is_string($field))
-                                                <p>{{ ucfirst($field) }}: {{ $item->$field }}</p>
-                                            @elseif(is_array($field))
-                                                <p>{{ isset($field['label'])?$field['label']:ucfirst($field['name']) }}: {{ $item[$field['name']] }}</p>
+                                            @if(is_string($field) && !empty($item[$field]))
+                                                <p>{{ ucfirst($field) }}: {{ $item[$field] }}</p>
+                                            @elseif(is_array($field) && !empty($item[$field['name']]))
+                                                @if(isset($field['component']) && $field['component']=='customFile')
+                                                    <div style="display: inline-block">
+                                                        <img class="img-responsive" src="/fileFit/200x100/{{ $item[$field['name']] }}"
+                                                             title="{{ $item->title }}"
+                                                             alt="{{ $item->title }}">
+                                                    </div>
+                                                @else
+                                                    <p>
+                                                        {{ isset($field['label'])?$field['label']:ucfirst($field['name']) }}:
+                                                        {{ $item[$field['name']] }}
+                                                    </p>
+                                                @endif
+
                                             @endif
                                         @endforeach
                                     </div>
@@ -50,6 +67,7 @@
 
                             {!! get_class($data)==Illuminate\Pagination\LengthAwarePaginator::class?$data->render():'' !!}
 
+                            <a name="form"></a><h2>Formulário de Registros:</h2>
                             {!! Form::model(isset($dataModel)?$dataModel:$dataModelInstance,
                                 isset($customFormAttr)?$customFormAttr:[]+[
                                     'route' => isset($dataModel)?[$routePrefix.'.update', $dataModel->id]:
@@ -81,4 +99,9 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('customFooterScripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-file-upload/2.3.4/angular-file-upload.min.js"></script>
 @endsection

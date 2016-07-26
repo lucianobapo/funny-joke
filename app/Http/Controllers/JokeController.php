@@ -13,6 +13,15 @@ use Intervention\Image\ImageManager;
 class JokeController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => 'index']);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param JokeService $jokeService
@@ -33,146 +42,7 @@ class JokeController extends Controller
             'data' => $jokeService->getAll(),
             'dataModelInstance' => $jokeService->dataModelInstance(),
             'routePrefix' => 'joke',
-            'fields' => [
-                [
-                    'name' => 'title',
-                    'label' => app('trans',['Title']),
-                    'component' => 'customText',
-                ],
-                [
-                    'name' => 'description',
-                    'label' => app('trans',['Description']),
-                    'component' => 'customText',
-                ],
-                [
-                    'name' => 'file',
-                    'label' => 'Imagem Antes do Teste',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file1',
-                    'label' => 'Imagem Aleatória do Teste 1',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file2',
-                    'label' => 'Imagem Aleatória do Teste 2',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file3',
-                    'label' => 'Imagem Aleatória do Teste 3',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file4',
-                    'label' => 'Imagem Aleatória do Teste 4',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file5',
-                    'label' => 'Imagem Aleatória do Teste 5',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file6',
-                    'label' => 'Imagem Aleatória do Teste 6',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file7',
-                    'label' => 'Imagem Aleatória do Teste 7',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file8',
-                    'label' => 'Imagem Aleatória do Teste 8',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file9',
-                    'label' => 'Imagem Aleatória do Teste 9',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file10',
-                    'label' => 'Imagem Aleatória do Teste 10',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file11',
-                    'label' => 'Imagem Aleatória do Teste 11',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file12',
-                    'label' => 'Imagem Aleatória do Teste 12',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file13',
-                    'label' => 'Imagem Aleatória do Teste 13',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file14',
-                    'label' => 'Imagem Aleatória do Teste 14',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'file15',
-                    'label' => 'Imagem Aleatória do Teste 15',
-                    'component' => 'customFile',
-                ],
-                [
-                    'name' => 'paramName',
-                    'label' => 'Mostrar Nome do Perfil',
-                    'value' => '1',
-                    'component' => 'customCheckbox',
-                ],
-                [
-                    'name' => 'paramNameSize',
-                    'label' => 'Tamanho do Nome do Perfil',
-                    'attributes' => ['placeholder'=>'ex.: 10'],
-                    'component' => 'customText',
-                ],
-                [
-                    'name' => 'paramNameColor',
-                    'label' => 'Cor do Nome do Perfil',
-                    'attributes' => ['placeholder'=>'ex.: FFFFFF'],
-                    'component' => 'customText',
-                ],
-                [
-                    'name' => 'paramNameX',
-                    'label' => 'Posição X do Nome do Perfil',
-                    'attributes' => ['placeholder'=>'ex.: 270'],
-                    'component' => 'customText',
-                ],
-                [
-                    'name' => 'paramNameY',
-                    'label' => 'Posição Y do Nome do Perfil',
-                    'attributes' => ['placeholder'=>'ex.: 230'],
-                    'component' => 'customText',
-                ],
-                [
-                    'name' => 'paramProfileImageSize',
-                    'label' => 'Tamanho da Imagem do Perfil',
-                    'attributes' => ['placeholder'=>'ex.: 116x116'],
-                    'component' => 'customText',
-                ],
-                [
-                    'name' => 'paramProfileImageX',
-                    'label' => 'Posição X da Imagem do Perfil',
-                    'attributes' => ['placeholder'=>'ex.: 10'],
-                    'component' => 'customText',
-                ],
-                [
-                    'name' => 'paramProfileImageY',
-                    'label' => 'Posição Y da Imagem do Perfil',
-                    'attributes' => ['placeholder'=>'ex.: 20'],
-                    'component' => 'customText',
-                ],
-            ],
+            'fields' => $this->fieldsConfig(),
             'customFormAttr' => ['files'=>true],
         ]);
     }
@@ -231,27 +101,17 @@ class JokeController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param int $id
      * @param  \App\Joke $joke
      * @return \Illuminate\Http\Response
      */
     public function jokeMake($id, $joke)
     {
         $imagem = [
-            'file1',
-            'file2',
-            'file3',
-            'file4',
-            'file5',
-            'file6',
-            'file7',
-            'file8',
-            'file9',
-            'file10',
-            'file11',
-            'file12',
-            'file13',
-            'file14',
-            'file15',
+            'file1', 'file2', 'file3', 'file4',
+            'file5', 'file6', 'file7', 'file8',
+            'file9', 'file10', 'file11', 'file12',
+            'file13', 'file14', 'file15',
         ];
 
         $imagemFiltred = [];
@@ -288,12 +148,29 @@ class JokeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param \App\Joke  $joke
+     * @param JokeService $jokeService
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($joke, JokeService $jokeService)
     {
-        abort(403);
+        $fields = $jokeService->getFillableFields();
+        foreach($fields as $key => $field){
+            if ($field=='file'){
+                $fields[$key]=[
+                    'name' => 'file',
+                    'component' => 'customFile',
+                ];
+            };
+        }
+        return view('dataIndex')->with([
+            'data' => $jokeService->getAll(),
+            'dataModel' => $joke,
+//            'dataModelInstance' => $jokeService->dataModelInstance(),
+            'routePrefix' => 'joke',
+            'fields' => $this->fieldsConfig(),
+            'customFormAttr' => ['files'=>true],
+        ]);
     }
 
     /**
@@ -322,5 +199,152 @@ class JokeController extends Controller
             return redirect(route('joke.index'));
         else
             throw new \Exception('Erro no Delete');
+    }
+
+    /**
+     * @return array
+     */
+    protected function fieldsConfig()
+    {
+        return [
+            [
+                'name' => 'title',
+                'label' => app('trans', ['Title']),
+                'component' => 'customText',
+            ],
+            [
+                'name' => 'description',
+                'label' => app('trans', ['Description']),
+                'component' => 'customText',
+            ],
+            [
+                'name' => 'file',
+                'label' => 'Imagem Antes do Teste',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file1',
+                'label' => 'Imagem Aleatória do Teste 1',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file2',
+                'label' => 'Imagem Aleatória do Teste 2',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file3',
+                'label' => 'Imagem Aleatória do Teste 3',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file4',
+                'label' => 'Imagem Aleatória do Teste 4',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file5',
+                'label' => 'Imagem Aleatória do Teste 5',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file6',
+                'label' => 'Imagem Aleatória do Teste 6',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file7',
+                'label' => 'Imagem Aleatória do Teste 7',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file8',
+                'label' => 'Imagem Aleatória do Teste 8',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file9',
+                'label' => 'Imagem Aleatória do Teste 9',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file10',
+                'label' => 'Imagem Aleatória do Teste 10',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file11',
+                'label' => 'Imagem Aleatória do Teste 11',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file12',
+                'label' => 'Imagem Aleatória do Teste 12',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file13',
+                'label' => 'Imagem Aleatória do Teste 13',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file14',
+                'label' => 'Imagem Aleatória do Teste 14',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'file15',
+                'label' => 'Imagem Aleatória do Teste 15',
+                'component' => 'customFile',
+            ],
+            [
+                'name' => 'paramName',
+                'label' => 'Mostrar Nome do Perfil',
+                'value' => '1',
+                'component' => 'customCheckbox',
+            ],
+            [
+                'name' => 'paramNameSize',
+                'label' => 'Tamanho do Nome do Perfil',
+                'attributes' => ['placeholder' => 'ex.: 10'],
+                'component' => 'customText',
+            ],
+            [
+                'name' => 'paramNameColor',
+                'label' => 'Cor do Nome do Perfil',
+                'attributes' => ['placeholder' => 'ex.: FFFFFF'],
+                'component' => 'customText',
+            ],
+            [
+                'name' => 'paramNameX',
+                'label' => 'Posição X do Nome do Perfil',
+                'attributes' => ['placeholder' => 'ex.: 270'],
+                'component' => 'customText',
+            ],
+            [
+                'name' => 'paramNameY',
+                'label' => 'Posição Y do Nome do Perfil',
+                'attributes' => ['placeholder' => 'ex.: 230'],
+                'component' => 'customText',
+            ],
+            [
+                'name' => 'paramProfileImageSize',
+                'label' => 'Tamanho da Imagem do Perfil',
+                'attributes' => ['placeholder' => 'ex.: 116x116'],
+                'component' => 'customText',
+            ],
+            [
+                'name' => 'paramProfileImageX',
+                'label' => 'Posição X da Imagem do Perfil',
+                'attributes' => ['placeholder' => 'ex.: 10'],
+                'component' => 'customText',
+            ],
+            [
+                'name' => 'paramProfileImageY',
+                'label' => 'Posição Y da Imagem do Perfil',
+                'attributes' => ['placeholder' => 'ex.: 20'],
+                'component' => 'customText',
+            ],
+        ];
     }
 }

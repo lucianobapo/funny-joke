@@ -11,6 +11,8 @@
                     Your Application's Landing Page.
                 </div>
             </div>
+
+            @include('unversioned.home')
         </div>
     </div>
 </div>

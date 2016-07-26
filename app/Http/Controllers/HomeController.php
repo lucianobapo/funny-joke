@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'welcome']);
     }
 
     /**
@@ -26,6 +26,19 @@ class HomeController extends Controller
     public function index(JokeService $jokeService)
     {
         return view('home')->with([
+            'data' => $jokeService->getAll(),
+        ]);
+    }
+
+    /**
+     * Show the application welcome.
+     *
+     * @param JokeService $jokeService
+     * @return \Illuminate\Http\Response
+     */
+    public function welcome(JokeService $jokeService)
+    {
+        return view('welcome')->with([
             'data' => $jokeService->getAll(),
         ]);
     }
