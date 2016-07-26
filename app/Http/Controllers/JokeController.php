@@ -18,7 +18,7 @@ class JokeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => 'index']);
+        $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
     /**
@@ -81,10 +81,6 @@ class JokeController extends Controller
             $fields[$key] = $fileManager->saveFile($request->file($key), 'jokes');
         }
         if($jokeService->saveOrFail($fields)) return redirect(route('joke.index'));
-
-//        if (($fields['file'] = $fileManager->saveFile($request->file('file'), 'jokes'))!==false) {
-//            if($jokeService->saveOrFail($fields)) return redirect(route('joke.index'));
-//        } else throw new \Exception('Erro no Upload');
     }
 
     /**
@@ -95,8 +91,16 @@ class JokeController extends Controller
      */
     public function show($joke)
     {
+        if (Auth::guest()){
+            $jokeMakeButton = link_to_route('auth.redirect', 'Login no Facebook para Fazer Testes', ['provider'=>'facebook'], ['class'=>'btn btn-primary']);
+        } else {
+            $jokeMakeButton = link_to_route('joke.jokeMake', 'Fazer Teste', [
+                'id'=>Auth::user()->provider_id,
+                'joke'=>$joke[$joke->getRouteKeyName()],
+            ], ['class'=>'btn btn-primary ']);
+        }
         $file = $joke->file;
-        return view('jokeShow', compact('joke'))->with([
+        return view('jokeShow', compact('joke', 'jokeMakeButton'))->with([
             'fileName' => "/file/$file",
         ]);
     }
@@ -143,7 +147,13 @@ class JokeController extends Controller
         if (!empty($joke->paramProfileImageX)) $params['x'] = $joke->paramProfileImageX;
         if (!empty($joke->paramProfileImageY)) $params['y'] = $joke->paramProfileImageY;
 
-        return view('jokeShow', compact('joke'))->with([
+        if (!Auth::guest()) {
+            $jokeMakeButton = link_to_route('joke.jokeMake', 'Refazer Teste', [
+                'id'=>Auth::user()->provider_id,
+                'joke'=>$joke[$joke->getRouteKeyName()],
+            ], ['class'=>'btn btn-primary ']);
+        }
+        return view('jokeShow', compact('joke', 'jokeMakeButton'))->with([
             'fileName' => "/fileJoke/$id/".urlencode(serialize($params)).'/'.$file,
         ]);
     }
