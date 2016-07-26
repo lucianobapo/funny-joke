@@ -14,6 +14,7 @@ class CreateJokesTable extends Migration
     {
         Schema::create('jokes', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('mandante')->index();
             $table->string('title')->index();
             $table->string('description')->nullable();
             $table->string('paramProfileImageSize')->nullable();

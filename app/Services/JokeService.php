@@ -48,6 +48,9 @@ class JokeService
             if (!empty($fields[$key])) $filteredFields[$key] = $value;
         }
 
+        if(!isset($filteredFields['mandante']))
+            $filteredFields['mandante'] = config('ilhanet.defaultMandante');
+
         $model = $this->joke->newInstance($filteredFields);
         return $model->saveOrFail();
     }

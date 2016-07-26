@@ -10,6 +10,7 @@ class Joke extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'mandante',
         'title',
         'description',
         'titleSlug',
