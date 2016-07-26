@@ -23,11 +23,13 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">{{ app('trans',['Code']) }}: {{ $item->id }}</div>
                                     <div class="panel-body">
-                                        <div class="pull-right">
-                                            {{ link_to_route('joke.edit', 'Editar', ['#form','joke'=>$item[$item->getRouteKeyName()]], ['class'=>'btn btn-primary']) }}
+                                        @if(!Auth::guest())
+                                            <div class="pull-right">
+                                                {{ link_to_route('joke.edit', 'Editar', ['#form','joke'=>$item[$item->getRouteKeyName()]], ['class'=>'btn btn-primary']) }}
 
-                                            <a href="" class="btn btn-primary">Apagar</a>
-                                        </div>
+                                                <a href="" class="btn btn-primary">Apagar</a>
+                                            </div>
+                                        @endif
                                         @foreach(isset($fields)?$fields:[] as $key => $field)
                                             @if(is_string($field) && !empty($item[$field]))
                                                 <p>{{ ucfirst($field) }}: {{ $item[$field] }}</p>
@@ -67,31 +69,33 @@
 
                             {!! get_class($data)==Illuminate\Pagination\LengthAwarePaginator::class?$data->render():'' !!}
 
-                            <a name="form"></a><h2>Formulário de Registros:</h2>
-                            {!! Form::model(isset($dataModel)?$dataModel:$dataModelInstance,
-                                isset($customFormAttr)?$customFormAttr:[]+[
-                                    'route' => isset($dataModel)?[$routePrefix.'.update', $dataModel->id]:
-                                        [$routePrefix.'.store']]) !!}
+                            @if(!Auth::guest())
+                                <a name="form"></a><h2>Formulário de Registros:</h2>
+                                {!! Form::model(isset($dataModel)?$dataModel:$dataModelInstance,
+                                    isset($customFormAttr)?$customFormAttr:[]+[
+                                        'route' => isset($dataModel)?[$routePrefix.'.update', $dataModel->id]:
+                                            [$routePrefix.'.store']]) !!}
 
                                 @foreach(isset($fields)?$fields:[] as $key => $field)
-                                    @if(is_string($field))
-                                        {{ Form::customText($field) }}
-                                    @elseif(is_array($field))
-                                        {{ forward_static_call(
-                                            ['Form',$field['component']],
-                                            $field['name'],
-                                            isset($field['label'])?$field['label']:null,
-                                            isset($field['value'])?$field['value']:null,
-                                            isset($field['attributes'])?$field['attributes']:null
-                                            ) }}
-                                    @endif
+                                @if(is_string($field))
+                                {{ Form::customText($field) }}
+                                @elseif(is_array($field))
+                                {{ forward_static_call(
+                                    ['Form',$field['component']],
+                                    $field['name'],
+                                    isset($field['label'])?$field['label']:null,
+                                    isset($field['value'])?$field['value']:null,
+                                    isset($field['attributes'])?$field['attributes']:null
+                                    ) }}
+                                @endif
                                 @endforeach
 
-                                <!-- Enviar Form Input -->
+                                        <!-- Enviar Form Input -->
                                 <div class="form-group">
                                     {!! Form::submit('Enviar',['class'=>'btn btn-primary form-control']) !!}
                                 </div>
-                            {!! Form::close() !!}
+                                {!! Form::close() !!}
+                            @endif
 
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 ssh luciano_bapo@funny-joke.ilhanet.com
 
 rsync -rvztPhe ssh .env.production luciano_bapo@funny-joke.ilhanet.com:code/funny-joke/.env
-rsync -rvztPhe ssh resourses/views/unversioned/ luciano_bapo@funny-joke.ilhanet.com:code/funny-joke/resourses/views/unversioned
+rsync -rvztPhe ssh resources/views/unversioned/ luciano_bapo@funny-joke.ilhanet.com:code/funny-joke/resources/views/unversioned
 
 The provided 'og:image' properties are not yet available because new images are processed asynchronously. 
 To ensure shares of new URLs include an image, specify the dimensions using 'og:image:width' and 'og:image:height' tags. 
