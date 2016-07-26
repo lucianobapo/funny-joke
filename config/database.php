@@ -50,6 +50,10 @@ return [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
+            'options' => [
+                PDO::ATTR_PERSISTENT => true,
+            ],
+
         ],
 
         'mysql' => [
