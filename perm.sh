@@ -48,3 +48,5 @@ find storage/framework/cache/ -type d -exec chmod g+s {} \;
 setfacl -dR -m u::rwx storage/framework/cache/
 setfacl -dR -m g::rwx storage/framework/cache/
 
+chgrp testesdivertidos -R resources/views/unversioned/
+chmod -R g+w resources/views/unversioned/
