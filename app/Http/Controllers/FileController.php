@@ -21,7 +21,6 @@ class FileController extends Controller
 
     public function showJoke($id, $params = [], $file){
         if (is_string($params)) $params = unserialize(urldecode($params));
-//        dd($params);
         return $this->fileManager->insertSocialProfileWithBgImage($file, $id, $params, 'jokes')->response();
     }
 

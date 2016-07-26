@@ -44,8 +44,16 @@ class Joke extends Model
         'file' => 'required',
     ];
 
+    protected $updateValidationRules = [
+        'title' => 'required|max:255',
+//        'file' => 'required',
+    ];
+
     public function getValidationRules(){
         return $this->validationRules;
+    }
+    public function getUpdateValidationRules(){
+        return $this->updateValidationRules;
     }
 
     /**

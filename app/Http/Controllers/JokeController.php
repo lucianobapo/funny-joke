@@ -43,7 +43,10 @@ class JokeController extends Controller
             'dataModelInstance' => $jokeService->dataModelInstance(),
             'routePrefix' => 'joke',
             'fields' => $this->fieldsConfig(),
-            'customFormAttr' => ['files'=>true],
+            'customFormAttr' => [
+                'route' => ['joke.store'],
+                'files'=>true,
+            ],
         ]);
     }
 
@@ -169,20 +172,37 @@ class JokeController extends Controller
 //            'dataModelInstance' => $jokeService->dataModelInstance(),
             'routePrefix' => 'joke',
             'fields' => $this->fieldsConfig(),
-            'customFormAttr' => ['files'=>true],
+            'customFormAttr' => [
+                'route' => ['joke.update', 'joke'=>$joke],
+                'files' => true,
+                'method' => 'PATCH',
+            ],
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Joke $joke
+     * @param FileManager $fileManager
+     * @param JokeService $jokeService
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $joke, FileManager $fileManager, JokeService $jokeService)
     {
-        abort(403);
+        $this->validate($request, $jokeService->getUpdateValidationRules());
+
+        $fields = $request->all();
+        if (isset($fields['title']))
+            $fields['titleSlug'] = str_slug($fields['title']);
+        $files = $request->allFiles();
+
+        foreach ($files as $key => $value) {
+            $fields[$key] = $fileManager->saveFile($request->file($key), 'jokes');
+        }
+
+        if($jokeService->updateOrFail($joke, $fields)) return redirect(route('joke.index'));
     }
 
     /**

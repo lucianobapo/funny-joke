@@ -31,6 +31,10 @@ class JokeService
     {
         return $this->joke->getValidationRules();
     }
+    public function getUpdateValidationRules()
+    {
+        return $this->joke->getUpdateValidationRules();
+    }
 
     public function dataModelInstance()
     {
@@ -46,5 +50,15 @@ class JokeService
 
         $model = $this->joke->newInstance($filteredFields);
         return $model->saveOrFail();
+    }
+
+    /**
+     * @param \App\Joke $joke
+     * @param $fields
+     * @return mixed
+     */
+    public function updateOrFail($joke, $fields)
+    {
+        return $joke->update($fields);
     }
 }

@@ -72,25 +72,23 @@
                             @if(!Auth::guest())
                                 <a name="form"></a><h2>Formulário de Registros:</h2>
                                 {!! Form::model(isset($dataModel)?$dataModel:$dataModelInstance,
-                                    isset($customFormAttr)?$customFormAttr:[]+[
-                                        'route' => isset($dataModel)?[$routePrefix.'.update', $dataModel->id]:
-                                            [$routePrefix.'.store']]) !!}
+                                    isset($customFormAttr)?$customFormAttr:[]) !!}
 
                                 @foreach(isset($fields)?$fields:[] as $key => $field)
-                                @if(is_string($field))
-                                {{ Form::customText($field) }}
-                                @elseif(is_array($field))
-                                {{ forward_static_call(
-                                    ['Form',$field['component']],
-                                    $field['name'],
-                                    isset($field['label'])?$field['label']:null,
-                                    isset($field['value'])?$field['value']:null,
-                                    isset($field['attributes'])?$field['attributes']:null
-                                    ) }}
-                                @endif
+                                    @if(is_string($field))
+                                        {{ Form::customText($field) }}
+                                    @elseif(is_array($field))
+                                        {{ forward_static_call(
+                                            ['Form',$field['component']],
+                                            $field['name'],
+                                            isset($field['label'])?$field['label']:null,
+                                            isset($field['value'])?$field['value']:null,
+                                            isset($field['attributes'])?$field['attributes']:null
+                                            ) }}
+                                    @endif
                                 @endforeach
 
-                                        <!-- Enviar Form Input -->
+                                <!-- Enviar Form Input -->
                                 <div class="form-group">
                                     {!! Form::submit('Enviar',['class'=>'btn btn-primary form-control']) !!}
                                 </div>
