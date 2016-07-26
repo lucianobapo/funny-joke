@@ -93,6 +93,7 @@
                                     {!! Form::submit('Enviar',['class'=>'btn btn-primary form-control']) !!}
                                 </div>
                                 {!! Form::close() !!}
+
                             @endif
 
                     </div>
