@@ -1,5 +1,10 @@
 ssh luciano_bapo@funny-joke.ilhanet.com
 
+ssh testesdivertidos.com
+
+rsync -rvztPhe ssh .env.production testesdivertidos.com:/home/testesdivertidos/funny-joke/.env
+rsync -rvztPhe ssh resources/views/unversioned/ testesdivertidos.com:/home/testesdivertidos/funny-joke/resources/views/unversioned
+
 rsync -rvztPhe ssh .env.production luciano_bapo@funny-joke.ilhanet.com:code/funny-joke/.env
 rsync -rvztPhe ssh resources/views/unversioned/ luciano_bapo@funny-joke.ilhanet.com:code/funny-joke/resources/views/unversioned
 

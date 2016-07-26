@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'defaultMandante' => 'ilhanet',
-    'defaultSiteName' => 'Funny Joke',
-    'defaultJokeName' => 'Joke',
+    'defaultMandante' => env('DEFAULT_MANDANTE', 'ilhanet'),
+    'defaultSiteName' => env('DEFAULT_SITE_NAME', 'Funny Joke'),
+    'defaultJokeName' => env('DEFAULT_JOKE_NAME', 'Joke'),
 
     //socialLogin configs
     'socialLogin' => [
