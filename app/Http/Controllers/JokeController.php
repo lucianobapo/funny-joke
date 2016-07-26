@@ -134,12 +134,12 @@ class JokeController extends Controller
                 'file9', 'file10', 'file11', 'file12',
                 'file13', 'file14', 'file15',
             ]);
-        }
+            $shareUrl = url($_SERVER['REQUEST_URI']).'/'.$file;
+        } else $shareUrl = url($_SERVER['REQUEST_URI']);
 
         $params = $this->getParamsForJoke($joke, $userService->findFirst(['provider_id'=>$id])->name);
-        return view('jokeShow', compact('joke', 'jokeMakeButton'))->with([
+        return view('jokeShow', compact('joke', 'jokeMakeButton', 'shareUrl'))->with([
             'likeUrl' => url($_SERVER['REQUEST_URI']),
-            'shareUrl' => url($_SERVER['REQUEST_URI']).'/'.$file,
             'fileName' => "/fileJoke/$id/".urlencode(serialize($params)).'/'.$file,
         ]);
     }
