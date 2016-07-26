@@ -100,8 +100,8 @@ class JokeController extends Controller
                 'joke'=>$joke[$joke->getRouteKeyName()],
             ], ['class'=>'btn btn-primary ']);
         }
-
-        return view('jokeShow', compact('joke', 'jokeMakeButton'))->with([
+        $shareUrl = url($_SERVER['REQUEST_URI']);
+        return view('jokeShow', compact('joke', 'jokeMakeButton', 'shareUrl'))->with([
             'fileName' => "/file/".$joke->file,
         ]);
     }
@@ -114,7 +114,7 @@ class JokeController extends Controller
      * @param UserService $userService
      * @return \Illuminate\Http\Response
      */
-    public function jokeMake($id, $joke, UserService $userService, $params=null)
+    public function jokeMake($id, $joke, UserService $userService, $file=null)
     {
         if (Auth::guest()) {
             $jokeMakeButton = link_to_route('auth.redirect', 'Login no Facebook para Fazer Testes', ['provider'=>'facebook'], ['class'=>'btn btn-primary']);
@@ -122,25 +122,23 @@ class JokeController extends Controller
             $jokeMakeButton = link_to_route('joke.jokeMake', 'Refazer Teste', [
                 'id'=>$id,
                 'joke'=>$joke[$joke->getRouteKeyName()],
+//                'file'=>$file,
             ], ['class'=>'btn btn-primary ']);
         }
 
-        if (is_null($params)){
+        if (is_null($file)){
             $file = $this->getRandomImage($joke, [
                 'file1', 'file2', 'file3', 'file4',
                 'file5', 'file6', 'file7', 'file8',
                 'file9', 'file10', 'file11', 'file12',
                 'file13', 'file14', 'file15',
             ]);
-            $params = $this->getParamsForJoke($joke, $userService->findFirst(['provider_id'=>$id])->name);
-            return view('jokeShow', compact('joke', 'jokeMakeButton'))->with([
-                'fileName' => "/fileJoke/$id/".urlencode(serialize($params)).'/'.$file,
-            ]);
-        } else {
-            return view('jokeShow', compact('joke', 'jokeMakeButton'))->with([
-                'fileName' => "/file/".urlencode(serialize($params)),
-            ]);
         }
+        $shareUrl = url($_SERVER['REQUEST_URI']).'/'.$file;
+        $params = $this->getParamsForJoke($joke, $userService->findFirst(['provider_id'=>$id])->name);
+        return view('jokeShow', compact('joke', 'jokeMakeButton', 'shareUrl'))->with([
+            'fileName' => "/fileJoke/$id/".urlencode(serialize($params)).'/'.$file,
+        ]);
     }
 
     /**
