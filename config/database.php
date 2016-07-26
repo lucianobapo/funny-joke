@@ -26,8 +26,7 @@ return [
     |
     */
 
-//    'default' => env('DB_CONNECTION', 'mysql'),
-    'default' => 'sqlite',
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +51,7 @@ return [
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
             'options' => [
-                PDO::ATTR_PERSISTENT => true,
+//                PDO::ATTR_PERSISTENT => true,
             ],
 
         ],
