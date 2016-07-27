@@ -7,7 +7,8 @@ return [
 
     //socialLogin configs
     'socialLogin' => [
-        'availableProviders' => ['facebook','google'],
+//        'availableProviders' => ['facebook','google'],
+        'availableProviders' => explode(',', env('SOCIAL_LOGIN_PROVIDERS')),
 
         'google' => [
             'scopes' => [
