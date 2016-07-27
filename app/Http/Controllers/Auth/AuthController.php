@@ -62,7 +62,8 @@ class AuthController extends Controller
         return Validator::make($data, [
             'provider' => 'in:'.$providerRequired,
             'name' => 'required_without:provider|max:255',
-            'email' => 'required_without:provider|email|max:255|unique:users',
+//            'email' => 'required_without:provider|email|max:255|unique:users',
+            'email' => 'required_without:provider|email|max:255|unique:users,email,NULL,id,provider_id,'.$data['provider_id'],
             'password' => 'required_without:provider|min:6|confirmed',
         ]);
     }
@@ -80,7 +81,7 @@ class AuthController extends Controller
             'provider_name' => 'required|in:'.$providerRequired,
             'provider_id' => 'required|numeric',
 //            'name' => 'required_without:provider|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'email' => 'required|email|max:255|unique:users,email,NULL,id,provider_id,'.$data['provider_id'],
 //            'password' => 'required_without:provider|min:6|confirmed',
         ]);
     }
