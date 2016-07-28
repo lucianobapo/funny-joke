@@ -92,8 +92,13 @@ class JokeController extends Controller
      */
     public function show($joke)
     {
+        $jokeMakeButton = null;
+        $jokeReMakeButton = null;
+        $loginButton = null;
         if (Auth::guest()){
-            $jokeMakeButton = link_to_route('auth.redirect', 'Login no Facebook para Fazer Testes', ['provider'=>'facebook'], ['class'=>'btn btn-primary']);
+            $loginButton = link_to_route('auth.redirect', 'Login no Facebook para Fazer Testes', [
+                'provider'=>'facebook'
+            ], ['class'=>'btn btn-primary']);
         } else {
             $jokeMakeButton = link_to_route('joke.jokeMake', 'Fazer Teste', [
                 'id'=>Auth::user()->provider_id,
@@ -101,7 +106,10 @@ class JokeController extends Controller
             ], ['class'=>'btn btn-primary ']);
         }
 
-        return view('jokeShow', compact('joke', 'jokeMakeButton'))->with([
+        return view('jokeShow', compact('joke'))->with([
+            'loginButton' => $loginButton,
+            'jokeReMakeButton' => $jokeReMakeButton,
+            'jokeMakeButton' => $jokeMakeButton,
             'likeUrl' => url($_SERVER['REQUEST_URI']),
             'shareUrl' => url($_SERVER['REQUEST_URI']),
             'fileName' => "/file/".$joke->file,
@@ -118,10 +126,15 @@ class JokeController extends Controller
      */
     public function jokeMake($id, $joke, UserService $userService, $file=null)
     {
+        $jokeMakeButton = null;
+        $jokeReMakeButton = null;
+        $loginButton = null;
         if (Auth::guest()) {
-            $jokeMakeButton = link_to_route('auth.redirect', 'Login no Facebook para Fazer Testes', ['provider'=>'facebook'], ['class'=>'btn btn-primary']);
+            $loginButton = link_to_route('auth.redirect', 'Login no Facebook para Fazer Testes', [
+                'provider'=>'facebook'
+            ], ['class'=>'btn btn-primary']);
         } else {
-            $jokeMakeButton = link_to_route('joke.jokeMake', 'Refazer Teste', [
+            $jokeReMakeButton = link_to_route('joke.jokeMake', 'Refazer Teste', [
                 'id'=>$id,
                 'joke'=>$joke[$joke->getRouteKeyName()],
             ], ['class'=>'btn btn-primary ']);
@@ -138,7 +151,10 @@ class JokeController extends Controller
         } else $shareUrl = url($_SERVER['REQUEST_URI']);
 
         $params = $this->getParamsForJoke($joke, $userService->findFirst(['provider_id'=>$id])->name);
-        return view('jokeShow', compact('joke', 'jokeMakeButton', 'shareUrl'))->with([
+        return view('jokeShow', compact('joke', 'shareUrl'))->with([
+            'loginButton' => $loginButton,
+            'jokeReMakeButton' => $jokeReMakeButton,
+            'jokeMakeButton' => $jokeMakeButton,
             'likeUrl' => url($_SERVER['REQUEST_URI']),
             'fileName' => "/fileJoke/$id/".urlencode(serialize($params)).'/'.$file,
         ]);

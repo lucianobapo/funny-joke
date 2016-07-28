@@ -60,11 +60,11 @@ class AuthController extends Controller
     {
         $providerRequired = empty($this->socialProviders)?'laravel':'laravel,'.$this->socialProviders;
         return Validator::make($data, [
-            'provider' => 'in:'.$providerRequired,
-            'name' => 'required_without:provider|max:255',
+            'provider_name' => 'in:'.$providerRequired,
+            'name' => 'required_without:provider_name|max:255',
 //            'email' => 'required_without:provider|email|max:255|unique:users',
-            'email' => 'required_without:provider|email|max:255|unique:users,email,NULL,id,provider_id,'.$data['provider_id'],
-            'password' => 'required_without:provider|min:6|confirmed',
+            'email' => 'required_without:provider_name|email|max:255|unique:users,email,NULL,id,provider_name,NULL',
+            'password' => 'required_without:provider_name|min:6|confirmed',
         ]);
     }
 
@@ -94,11 +94,12 @@ class AuthController extends Controller
      */
     protected function validateLogin(Request $request)
     {
+//        dd($request->all());
         $providerRequired = empty($this->socialProviders)?'laravel':'laravel,'.$this->socialProviders;
         $this->validate($request, [
-            'provider' => 'in:'.$providerRequired,
-            $this->loginUsername() => 'required_without:provider',
-            'password' => 'required_without:provider',
+            'provider_name' => 'in:'.$providerRequired,
+            $this->loginUsername() => 'required_without:provider_name',
+            'password' => 'required_without:provider_name',
         ]);
     }
 
@@ -125,7 +126,6 @@ class AuthController extends Controller
      */
     protected function processSocialUser($provider, $socialUser)
     {
-
         $userFromDatabase = $this->userService->findFirst([
             'provider_name' => $provider,
             'provider_id' => $socialUser->getId(),
@@ -176,8 +176,8 @@ class AuthController extends Controller
 
         $data = $request->all();
 
-        if (isset($data['provider'])){
-            return $this->redirectToProvider($data['provider']);
+        if (isset($data['provider_name']) && array_search($data['provider_name'],config('ilhanet.socialLogin.availableProviders'))!==false){
+            return $this->redirectToProvider($data['provider_name']);
         }
 
         Auth::guard($this->getGuard())->login($this->create($data));
@@ -208,16 +208,18 @@ class AuthController extends Controller
 
         $data = $request->all();
 
-        if (isset($data['provider'])){
-            return $this->redirectToProvider($data['provider']);
+        if (isset($data['provider_name']) && array_search($data['provider_name'],config('ilhanet.socialLogin.availableProviders'))!==false){
+            return $this->redirectToProvider($data['provider_name']);
         }
 
         $credentials = $this->getCredentials($request);
 
+
+
         if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
             return $this->handleUserWasAuthenticated($request, $throttles);
         }
-
+        dd($credentials);
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
