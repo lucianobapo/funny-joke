@@ -181,7 +181,7 @@ class AuthController extends Controller
         $data = $request->all();
 
         if (isset($data['provider_name']) && array_search($data['provider_name'],config('ilhanet.socialLogin.availableProviders'))!==false){
-            return $this->redirectToProvider($data['provider_name']);
+            return $this->redirectToProvider($data['provider_name'], $request);
         }
 
         Auth::guard($this->getGuard())->login($this->create($data));
@@ -213,7 +213,7 @@ class AuthController extends Controller
         $data = $request->all();
 
         if (isset($data['provider_name']) && array_search($data['provider_name'],config('ilhanet.socialLogin.availableProviders'))!==false){
-            return $this->redirectToProvider($data['provider_name']);
+            return $this->redirectToProvider($data['provider_name'], $request);
         }
 
         $credentials = $this->getCredentials($request);
