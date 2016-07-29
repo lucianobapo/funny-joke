@@ -102,7 +102,10 @@ class JokeController extends Controller
                 'provider'=>'facebook',
 //                'redirect' => url($_SERVER['REQUEST_URI']),
 //                'redirect_uri' => url($_SERVER['REQUEST_URI']),
-                'redirect_uri' => config('services.facebook.redirect').'?back='.$_SERVER['REQUEST_URI'],
+                'back' => $_SERVER['REQUEST_URI'],
+//                'back' => config('services.facebook.redirect').'?back='.$_SERVER['REQUEST_URI'],
+//                'redirect_uri' => config('services.facebook.redirect').'?back='.url($_SERVER['REQUEST_URI']),
+//                'redirect_uri' => config('services.facebook.redirect'),
             ], ['class'=>'btn btn-primary']);
         } else {
             $jokeMakeButton = link_to_route('joke.jokeMake', 'Fazer Teste', [

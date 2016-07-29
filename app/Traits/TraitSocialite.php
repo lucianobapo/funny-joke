@@ -39,23 +39,25 @@ trait TraitSocialite
      */
     public function redirectToProvider($provider, Request $request)
     {
-//        dd($request->all());
-//        dd(func_get_args());
-        return $this->callSocialiteDriver($provider)->with($request->all())->redirect();
+        $args = $request->all();
+
+        if (isset($args['back']))
+            $request->session()->put('back', $args['back']);
+
+        return $this->callSocialiteDriver($provider)->redirect();
     }
 
     /**
      * Obtain the user information from Provider.
      *
      * @param $provider
+     * @param Request $request
      * @return Response
      */
     public function handleProviderCallback($provider, Request $request)
     {
-        $args = $request->all();
         $user = $this->callSocialiteDriver($provider)->user();
-
-        return $this->processSocialUser($provider, $user, $args);
+        return $this->processSocialUser($provider, $user, $request);
 
         // OAuth Two Providers
 //        $token = $user->token;
