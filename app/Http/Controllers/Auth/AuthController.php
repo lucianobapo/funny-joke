@@ -157,9 +157,9 @@ class AuthController extends Controller
         Auth::guard($this->getGuard())->login($userFromDatabase);
 
         if ($request->session()->has('back'))
-            return redirect()->intended($request->session()->get('back'));
+            return redirect($request->session()->get('back'));
         else
-            return redirect()->intended($this->redirectPath());
+            return redirect($this->redirectPath());
     }
 
     /**
