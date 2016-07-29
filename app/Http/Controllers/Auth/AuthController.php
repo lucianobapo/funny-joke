@@ -155,7 +155,7 @@ class AuthController extends Controller
 
         Auth::guard($this->getGuard())->login($userFromDatabase);
 
-        return redirect($this->redirectPath());
+        return redirect()->intended($this->redirectPath());
     }
 
     /**

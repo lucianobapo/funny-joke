@@ -13,6 +13,10 @@ use Laravel\Socialite\Facades\Socialite;
 
 trait TraitSocialite
 {
+    /**
+     * @param $provider
+     * @return \Laravel\Socialite\Two\AbstractProvider
+     */
     protected function callSocialiteDriver($provider)
     {
         $driver = Socialite::driver($provider);
@@ -24,9 +28,11 @@ trait TraitSocialite
 
         return $driver;
     }
+
     /**
-     * Redirect the user to the GitHub authentication page.
+     * Redirect the user to the Provider authentication page.
      *
+     * @param $provider
      * @return Response
      */
     public function redirectToProvider($provider)
@@ -35,8 +41,9 @@ trait TraitSocialite
     }
 
     /**
-     * Obtain the user information from GitHub.
+     * Obtain the user information from Provider.
      *
+     * @param $provider
      * @return Response
      */
     public function handleProviderCallback($provider)
@@ -65,6 +72,8 @@ trait TraitSocialite
     /**
      * processSocialUser.
      *
+     * @param $provider
+     * @param $user
      * @return Response
      */
     abstract protected function processSocialUser($provider, $user);
