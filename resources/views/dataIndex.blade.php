@@ -25,8 +25,8 @@
                                     <div class="panel-body">
                                         @if(!Auth::guest())
                                             <div class="pull-right">
-                                                {{ link_to_route($routePrefix.'.edit', 'Editar', ['#form', $routePrefix=>$item[$item->getRouteKeyName()]], ['class'=>'btn btn-primary']) }}
-                                                {{ Form::open(['style'=> 'display: inline-block;', 'method' => 'DELETE', 'route' => [$routePrefix.'.destroy', $item[$item->getRouteKeyName()]] ]) }}
+                                                {{ link_to_route($routePrefix.'.edit', 'Editar', [$item, '#form'], ['class'=>'btn btn-primary']) }}
+                                                {{ Form::open(['style'=> 'display: inline-block;', 'method' => 'DELETE', 'route' => [$routePrefix.'.destroy', $item] ]) }}
                                                     {{ Form::submit('Apagar',['class'=>'btn btn-danger']) }}
                                                 {{ Form::close() }}
 {{--                                                {{ link_to_route($routePrefix.'.destroy', 'Apagar', [$routePrefix=>$item[$item->getRouteKeyName()]], ['class'=>'btn btn-danger']) }}--}}
