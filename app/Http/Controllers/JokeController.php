@@ -87,10 +87,11 @@ class JokeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Joke  $joke
+     * @param  \App\Joke $joke
+     * @param JokeService $jokeService
      * @return \Illuminate\Http\Response
      */
-    public function show($joke)
+    public function show($joke, JokeService $jokeService)
     {
         $jokeMakeButton = null;
         $jokeReMakeButton = null;
@@ -107,6 +108,7 @@ class JokeController extends Controller
         }
 
         return view('jokeShow', compact('joke'))->with([
+            'data' => $jokeService->getAll(),
             'loginButton' => $loginButton,
             'jokeReMakeButton' => $jokeReMakeButton,
             'jokeMakeButton' => $jokeMakeButton,
@@ -121,10 +123,12 @@ class JokeController extends Controller
      *
      * @param int $id
      * @param  \App\Joke $joke
+     * @param JokeService $jokeService
      * @param UserService $userService
+     * @param null $file
      * @return \Illuminate\Http\Response
      */
-    public function jokeMake($id, $joke, UserService $userService, $file=null)
+    public function jokeMake($id, $joke, JokeService $jokeService, UserService $userService, $file=null)
     {
         $jokeMakeButton = null;
         $jokeReMakeButton = null;
@@ -152,6 +156,7 @@ class JokeController extends Controller
 
         $params = $this->getParamsForJoke($joke, $userService->findFirst(['provider_id'=>$id])->name);
         return view('jokeShow', compact('joke', 'shareUrl'))->with([
+            'data' => $jokeService->getAll(),
             'loginButton' => $loginButton,
             'jokeReMakeButton' => $jokeReMakeButton,
             'jokeMakeButton' => $jokeMakeButton,
