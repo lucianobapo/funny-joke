@@ -8,6 +8,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -33,11 +34,14 @@ trait TraitSocialite
      * Redirect the user to the Provider authentication page.
      *
      * @param $provider
+     * @param Request $request
      * @return Response
      */
-    public function redirectToProvider($provider)
+    public function redirectToProvider($provider, Request $request)
     {
-        return $this->callSocialiteDriver($provider)->redirect();
+//        dd($request->all());
+//        dd(func_get_args());
+        return $this->callSocialiteDriver($provider)->with($request->all())->redirect();
     }
 
     /**
@@ -46,11 +50,12 @@ trait TraitSocialite
      * @param $provider
      * @return Response
      */
-    public function handleProviderCallback($provider)
+    public function handleProviderCallback($provider, Request $request)
     {
+        $args = $request->all();
         $user = $this->callSocialiteDriver($provider)->user();
 
-        return $this->processSocialUser($provider, $user);
+        return $this->processSocialUser($provider, $user, $args);
 
         // OAuth Two Providers
 //        $token = $user->token;
@@ -74,7 +79,8 @@ trait TraitSocialite
      *
      * @param $provider
      * @param $user
+     * @param $args
      * @return Response
      */
-    abstract protected function processSocialUser($provider, $user);
+    abstract protected function processSocialUser($provider, $user, $args);
 }

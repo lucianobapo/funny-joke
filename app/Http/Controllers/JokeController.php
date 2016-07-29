@@ -19,8 +19,8 @@ class JokeController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware('auth', ['except' => ['index', 'show', 'jokeMake']]);
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth', ['except' => ['index', 'show', 'jokeMake']]);
+//        $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
     /**
@@ -99,7 +99,10 @@ class JokeController extends Controller
         $loginButton = null;
         if (Auth::guest()){
             $loginButton = link_to_route('auth.redirect', 'Login no Facebook para Fazer Testes', [
-                'provider'=>'facebook'
+                'provider'=>'facebook',
+//                'redirect' => url($_SERVER['REQUEST_URI']),
+//                'redirect_uri' => url($_SERVER['REQUEST_URI']),
+                'redirect_uri' => config('services.facebook.redirect').'?back='.$_SERVER['REQUEST_URI'],
             ], ['class'=>'btn btn-primary']);
         } else {
             $jokeMakeButton = link_to_route('joke.jokeMake', 'Fazer Teste', [

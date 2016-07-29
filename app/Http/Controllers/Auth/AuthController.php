@@ -122,9 +122,10 @@ class AuthController extends Controller
     /**
      * @param string $provider
      * @param $socialUser
+     * @param $args
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    protected function processSocialUser($provider, $socialUser)
+    protected function processSocialUser($provider, $socialUser, $args)
     {
         $userFromDatabase = $this->userService->findFirst([
             'provider_name' => $provider,
@@ -155,7 +156,8 @@ class AuthController extends Controller
 
         Auth::guard($this->getGuard())->login($userFromDatabase);
 
-        return redirect()->intended($this->redirectPath());
+        return redirect()->intended($args['back']);
+//        return redirect()->intended($this->redirectPath());
     }
 
     /**
