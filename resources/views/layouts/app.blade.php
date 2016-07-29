@@ -49,11 +49,13 @@
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                @if (!Auth::guest())
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ url('/home') }}">Home</a></li>
 
-                    <li><a href="{{ route('joke.index') }}">{{ app('mandante')->getJokeName() }}</a></li>
-                </ul>
+                        <li><a href="{{ route('joke.index') }}">{{ app('mandante')->getJokeName() }}</a></li>
+                    </ul>
+                @endif
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
@@ -61,11 +63,6 @@
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}"><i class="fa fa-btn fa-sign-in"></i>Login</a></li>
                         <li><a href="{{ url('/register') }}"><i class="fa fa-btn fa-user"></i>Register</a></li>
-                        <li>
-                            <a href="{{ route('mandante.index') }}">
-                                <i class="fa fa-btn fa-cogs"></i>Configurações
-                            </a>
-                        </li>
                     @else
                         @if(isset(Auth::user()->avatar))
                             <li>

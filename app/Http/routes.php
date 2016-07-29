@@ -13,7 +13,7 @@
 
 Route::get('/', 'HomeController@welcome');
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@welcome');
 
 Route::get('/phpinfo', function () {
     return phpinfo();
