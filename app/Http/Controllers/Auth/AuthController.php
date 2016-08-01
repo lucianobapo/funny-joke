@@ -11,6 +11,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Cache\Repository as CacheRepository;
 
 class AuthController extends Controller
 {
@@ -37,17 +38,20 @@ class AuthController extends Controller
 
     protected $userService;
     protected $socialProviders;
+    protected $cache;
 
     /**
      * Create a new authentication controller instance.
      *
      * @param UserService $userService
+     * @param CacheRepository $cache
      */
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, CacheRepository $cache)
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
         $this->userService = $userService;
         $this->socialProviders = implode(',', config('ilhanet.socialLogin.availableProviders'));
+        $this->cache = $cache;
     }
 
     /**
@@ -156,8 +160,8 @@ class AuthController extends Controller
 
         Auth::guard($this->getGuard())->login($userFromDatabase);
 
-        if ($request->session()->has('back'))
-            return redirect($request->session()->get('back'));
+        if ($this->cache->has(md5($_SERVER['REMOTE_ADDR'])))
+            return redirect($this->cache->get(md5($_SERVER['REMOTE_ADDR'])));
         else
             return redirect($this->redirectPath());
     }

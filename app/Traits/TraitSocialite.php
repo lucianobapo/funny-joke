@@ -11,9 +11,16 @@ namespace App\Traits;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Cache\Repository as CacheRepository;
 
 trait TraitSocialite
 {
+    /**
+     *
+     * @var CacheRepository
+     */
+    protected $cache;
+
     /**
      * @param $provider
      * @return \Laravel\Socialite\Two\AbstractProvider
@@ -42,7 +49,8 @@ trait TraitSocialite
         $args = $request->all();
 
         if (isset($args['back']))
-            $request->session()->put('back', $args['back']);
+            $this->cache->put(md5($_SERVER['REMOTE_ADDR']), $args['back'], 5);
+//            $request->cookie('back', $args['back']);
 
         return $this->callSocialiteDriver($provider)->redirect();
     }
