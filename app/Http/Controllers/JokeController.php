@@ -102,20 +102,15 @@ class JokeController extends Controller
         $jokeReMakeButton = null;
         $loginButton = null;
         if (Auth::guest()){
-            $loginButton = link_to_route('auth.redirect', 'Login no Facebook para Fazer Testes', [
+            $loginButton = route('auth.redirect',[
                 'provider'=>'facebook',
-//                'redirect' => url($_SERVER['REQUEST_URI']),
-//                'redirect_uri' => url($_SERVER['REQUEST_URI']),
                 'back' => $_SERVER['REQUEST_URI'],
-//                'back' => config('services.facebook.redirect').'?back='.$_SERVER['REQUEST_URI'],
-//                'redirect_uri' => config('services.facebook.redirect').'?back='.url($_SERVER['REQUEST_URI']),
-//                'redirect_uri' => config('services.facebook.redirect'),
-            ], ['class'=>'btn btn-primary']);
+            ]);
         } else {
-            $jokeMakeButton = link_to_route('joke.jokeMake', 'Fazer Teste', [
+            $jokeMakeButton = route('joke.jokeMake',[
                 'id'=>Auth::user()->provider_id,
                 'joke'=>$joke[$joke->getRouteKeyName()],
-            ], ['class'=>'btn btn-primary ']);
+            ]);
         }
 
         return view('jokeShow', compact('joke'))->with([
@@ -145,14 +140,15 @@ class JokeController extends Controller
         $jokeReMakeButton = null;
         $loginButton = null;
         if (Auth::guest()) {
-            $loginButton = link_to_route('auth.redirect', 'Login no Facebook para Fazer Testes', [
-                'provider'=>'facebook'
-            ], ['class'=>'btn btn-primary']);
+            $loginButton = route('auth.redirect',[
+                'provider'=>'facebook',
+                'back' => $_SERVER['REQUEST_URI'],
+            ]);
         } else {
-            $jokeReMakeButton = link_to_route('joke.jokeMake', 'Refazer Teste', [
+            $jokeReMakeButton = route('joke.jokeMake',[
                 'id'=>$id,
                 'joke'=>$joke[$joke->getRouteKeyName()],
-            ], ['class'=>'btn btn-primary ']);
+            ]);
         }
 
         if (is_null($file)){
