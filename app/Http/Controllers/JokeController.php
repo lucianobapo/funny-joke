@@ -185,7 +185,7 @@ class JokeController extends Controller
      */
     public function edit($joke, JokeService $jokeService)
     {
-        $this->authorize($jokeService->dataModelInstance());
+        $this->authorize($joke);
 
         $fields = $jokeService->getFillableFields();
         foreach($fields as $key => $field){
@@ -221,7 +221,7 @@ class JokeController extends Controller
      */
     public function update(Request $request, $joke, FileManager $fileManager, JokeService $jokeService)
     {
-        $this->authorize($jokeService->dataModelInstance());
+        $this->authorize($joke);
 
         $this->validate($request, $jokeService->getUpdateValidationRules());
 

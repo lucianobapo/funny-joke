@@ -41,6 +41,28 @@ class JokePolicy
     }
 
     /**
+     * Determine if the given post can be edit by the user.
+     *
+     * @param \App\User $user
+     * @return bool
+     */
+    public function edit(\App\User $user)
+    {
+        return $user->isSuperAdmin();
+    }
+
+    /**
+     * Determine if the given post can be destroy by the user.
+     *
+     * @param \App\User $user
+     * @return bool
+     */
+    public function destroy(\App\User $user)
+    {
+        return $user->isSuperAdmin();
+    }
+
+    /**
      * Determine if the given post can be index by the user.
      *
      * @param \App\User $user
