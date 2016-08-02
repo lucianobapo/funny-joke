@@ -104,7 +104,8 @@ class JokeController extends Controller
         if (Auth::guest()){
             $loginButton = route('auth.redirect',[
                 'provider'=>'facebook',
-                'back' => $_SERVER['REQUEST_URI'],
+//                'back' => $_SERVER['REQUEST_URI'],
+                'back' => route('joke.show', $joke),
             ]);
         } else {
             $jokeMakeButton = route('joke.jokeMake',[
@@ -142,7 +143,7 @@ class JokeController extends Controller
         if (Auth::guest()) {
             $loginButton = route('auth.redirect',[
                 'provider'=>'facebook',
-                'back' => $_SERVER['REQUEST_URI'],
+                'back' => route('joke.show', $joke),
             ]);
         } else {
             $jokeReMakeButton = route('joke.jokeMake',[

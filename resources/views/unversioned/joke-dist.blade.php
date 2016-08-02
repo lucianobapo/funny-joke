@@ -52,21 +52,8 @@
         .fb-like{margin-bottom: 10px;}
     </style>
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.7&appId=1584544561792934";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-<div class="panel-body" style="border:0; ">
+<div class="panel-body">
     <div class="row">
-        <div class="banner-topo">
-            <img src="http://testesdivertidos.com/banner-topo.jpg">
-        </div>
-
         <div class="col-lg-8">
             <div class="panel-body text-center">
                 <div class="imagem-post">
@@ -80,21 +67,10 @@
                     @endif
                 </div>
 
-                {{--"Titulo do post"--}}
-                @if(!is_null($loginButton))
-                    <div class="titulo-post">
-                        {{--Mostra o título do teste--}}
-                        {{ $joke->title }} Teste e descubra
-                     </div>
-                @endif
-
-                {{--"Titulo do Post"--}}
-                @if(!is_null($jokeMakeButton))
-                    <div class="titulo-post">
-                        {{--Mostra o título do teste--}}
-                        {{ $joke->title }}
-                     </div>
-                @endif
+                {{--Mostra o título do teste--}}
+                <div class="titulo-post">
+                    {{ $joke->title }}
+                </div>
 
                 {{--Espaço "Descrição"--}}
                 @if(!is_null($jokeReMakeButton))
@@ -145,15 +121,9 @@
                     </div>
                 @endif
 
-                <div class="banner-conteudo">
-                    <img src="http://testesdivertidos.com/banner-conteudo.jpg">
-                </div>
             </div>
         </div>
 
-        <div class="col-lg-4">
-            <img src="http://testesdivertidos.com/banner-sidebar.jpg">
-        </div>
     </div>
 </div>
 
