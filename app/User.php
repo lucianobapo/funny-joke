@@ -27,4 +27,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function isSuperAdmin()
+    {
+        return array_search($this->attributes['email'], config('ilhanet.adminEmails'))!==false;
+    }
 }

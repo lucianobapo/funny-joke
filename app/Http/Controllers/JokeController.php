@@ -19,7 +19,7 @@ class JokeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show', 'jokeMake']]);
+        $this->middleware('auth', ['except' => ['show', 'jokeMake']]);
 //        $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
@@ -31,6 +31,8 @@ class JokeController extends Controller
      */
     public function index(JokeService $jokeService)
     {
+        $this->authorize($jokeService->dataModelInstance());
+
         $fields = $jokeService->getFillableFields();
         foreach($fields as $key => $field){
             if ($field=='file'){
@@ -73,6 +75,8 @@ class JokeController extends Controller
      */
     public function store(Request $request, FileManager $fileManager, JokeService $jokeService)
     {
+        $this->authorize($jokeService->dataModelInstance());
+
         $this->validate($request, $jokeService->getValidationRules());
 
         $fields = $request->all();
@@ -181,6 +185,8 @@ class JokeController extends Controller
      */
     public function edit($joke, JokeService $jokeService)
     {
+        $this->authorize($jokeService->dataModelInstance());
+
         $fields = $jokeService->getFillableFields();
         foreach($fields as $key => $field){
             if ($field=='file'){
@@ -215,6 +221,8 @@ class JokeController extends Controller
      */
     public function update(Request $request, $joke, FileManager $fileManager, JokeService $jokeService)
     {
+        $this->authorize($jokeService->dataModelInstance());
+
         $this->validate($request, $jokeService->getUpdateValidationRules());
 
         $fields = $request->all();
@@ -239,6 +247,8 @@ class JokeController extends Controller
      */
     public function destroy(Request $request, $joke)
     {
+        $this->authorize($joke);
+
         if ($request->method()=='DELETE' && $joke->delete()===true)
             return redirect(route('joke.index'));
         else

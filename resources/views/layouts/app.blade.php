@@ -53,7 +53,11 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{{ url('/home') }}">Home</a></li>
 
-                        <li><a href="{{ route('joke.index') }}">{{ app('mandante')->getJokeName() }}</a></li>
+                        @can('index', \App\Joke::class)
+                            <li>
+                                <a href="{{ route('joke.index') }}">{{ app('mandante')->getJokeName() }}</a>
+                            </li>
+                        @endcan
                     </ul>
                 @endif
 
@@ -76,11 +80,13 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{ route('mandante.index') }}">
-                                        <i class="fa fa-btn fa-cogs"></i>Configurações
-                                    </a>
-                                </li>
+                                @can('index', \App\Mandante::class)
+                                    <li>
+                                        <a href="{{ route('mandante.index') }}">
+                                            <i class="fa fa-btn fa-cogs"></i>Configurações
+                                        </a>
+                                    </li>
+                                @endcan
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>

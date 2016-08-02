@@ -5,6 +5,11 @@ return [
     'defaultSiteName' => env('DEFAULT_SITE_NAME', 'Funny Joke'),
     'defaultJokeName' => env('DEFAULT_JOKE_NAME', 'Joke'),
 
+    'adminEmails' => [
+        'luciano.bapo@gmail.com',
+        'suporte.wellingtonmelo@gmail.com',
+    ],
+
     //socialLogin configs
     'socialLogin' => [
 //        'availableProviders' => ['facebook','google'],

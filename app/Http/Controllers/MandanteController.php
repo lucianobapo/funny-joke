@@ -26,6 +26,8 @@ class MandanteController extends Controller
      */
     public function index(MandanteService $mandanteService)
     {
+        $this->authorize($mandanteService->dataModelInstance());
+
         return view('dataIndex')->with([
             'data' => $mandanteService->getAll(),
             'dataModelInstance' => $mandanteService->dataModelInstance(),
@@ -58,6 +60,8 @@ class MandanteController extends Controller
      */
     public function store(Request $request, MandanteService $mandanteService)
     {
+        $this->authorize($mandanteService->dataModelInstance());
+
         $this->validate($request, $mandanteService->getValidationRules());
 
         $fields = $request->all();
@@ -86,6 +90,8 @@ class MandanteController extends Controller
      */
     public function edit($selectedModel, MandanteService $mandanteService)
     {
+        $this->authorize($mandanteService->dataModelInstance());
+
         return view('dataIndex')->with([
             'data' => $mandanteService->getAll(),
             'dataModel' => $selectedModel,
@@ -108,6 +114,8 @@ class MandanteController extends Controller
      */
     public function update(Request $request, $selectedModel, MandanteService $mandanteService)
     {
+        $this->authorize($mandanteService->dataModelInstance());
+
         $this->validate($request, $mandanteService->getUpdateValidationRules());
 
         if($mandanteService->updateOrFail($selectedModel, $request->all()))
@@ -124,6 +132,8 @@ class MandanteController extends Controller
      */
     public function destroy(Request $request, $selectedModel)
     {
+        $this->authorize($selectedModel);
+
         if ($request->method()=='DELETE' && $selectedModel->delete()===true)
             return redirect(route('mandante.index'));
         else
