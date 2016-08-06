@@ -223,9 +223,13 @@ class JokeController extends Controller
         $this->validate($request, $jokeService->getUpdateValidationRules());
 
         $fields = $request->all();
+
         if (isset($fields['title']))
             $fields['titleSlug'] = str_slug($fields['title']);
         $files = $request->allFiles();
+
+        if (!isset($fields['paramName'])) $fields['paramName']=false;
+        if (!isset($fields['paramFirstName'])) $fields['paramFirstName']=false;
 
         foreach ($files as $key => $value) {
             $fields[$key] = $fileManager->saveFile($request->file($key), 'jokes');
@@ -355,6 +359,12 @@ class JokeController extends Controller
                 'component' => 'customCheckbox',
             ],
             [
+                'name' => 'paramFirstName',
+                'label' => 'Mostrar Somente Primeiro Nome do Perfil',
+                'value' => '1',
+                'component' => 'customCheckbox',
+            ],
+            [
                 'name' => 'paramNameSize',
                 'label' => 'Tamanho do Nome do Perfil',
                 'attributes' => ['placeholder' => 'ex.: 10'],
@@ -419,7 +429,13 @@ class JokeController extends Controller
     {
         $params = [];
         if ($joke->paramName) {
-            $params['name'] = $name;
+            if ($joke->paramFirstName) {
+                $aux = explode(' ',$name);
+                $params['name'] = $aux[0];
+            } else {
+                $params['name'] = $name;
+            }
+
             if (!empty($joke->paramNameSize)) $params['namesize'] = $joke->paramNameSize;
             if (!empty($joke->paramNameColor)) $params['namecolor'] = $joke->paramNameColor;
             if (!empty($joke->paramNameX)) $params['namex'] = $joke->paramNameX;

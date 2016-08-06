@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Joke extends Model
 {
@@ -34,6 +35,7 @@ class Joke extends Model
         'paramProfileImageX',
         'paramProfileImageY',
         'paramName',
+        'paramFirstName',
         'paramNameSize',
         'paramNameColor',
         'paramNameX',
@@ -54,6 +56,22 @@ class Joke extends Model
     }
     public function getUpdateValidationRules(){
         return $this->updateValidationRules;
+    }
+
+    public function getFilteredDescriptionAttribute()
+    {
+
+        if (isset(Auth::user()->name)) {
+            if ($this->attributes['paramFirstName']) {
+                $aux = explode(' ', Auth::user()->name);
+                $name = $aux[0];
+            } else {
+                $name = Auth::user()->name;
+            }
+            $desc = str_replace('#nome',$name ,$this->attributes['description']);
+        }
+        else $desc = $this->attributes['description'];
+        return $desc;
     }
 
     /**

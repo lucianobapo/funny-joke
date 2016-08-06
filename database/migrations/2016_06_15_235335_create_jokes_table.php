@@ -22,6 +22,7 @@ class CreateJokesTable extends Migration
             $table->string('paramProfileImageX')->nullable();
             $table->string('paramProfileImageY')->nullable();
             $table->string('paramName')->nullable();
+            $table->string('paramFirstName')->nullable();
             $table->string('paramNameSize')->nullable();
             $table->string('paramNameColor')->nullable();
             $table->string('paramNameX')->nullable();

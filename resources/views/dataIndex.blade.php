@@ -85,7 +85,8 @@
                                             $field['name'],
                                             isset($field['label'])?$field['label']:null,
                                             isset($field['value'])?$field['value']:null,
-                                            isset($field['attributes'])?$field['attributes']:null
+                                            isset($field['attributes'])?$field['attributes']:null,
+                                            (isset($dataModel) && $field['component']=='customCheckbox')?$dataModel[$field['name']]:null
                                             ) }}
                                     @endif
                                 @endforeach
