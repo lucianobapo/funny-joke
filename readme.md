@@ -1,18 +1,3 @@
-
-sem logar:
-- entrar no joke show -> sem parametros: ver joke em branco
-- entrar no joke show -> com parametros: ver joke em branco
-logado:
-- entrar no joke show -> sem parametros: ver joke em branco
-- entrar no joke show -> com parametros: ver joke em branco
-
-sem logar:
-- entrar no joke jokeMake -> sem parametros: ver joke em branco
-- entrar no joke jokeMake -> com parametros: ver joke feito
-logado:
-- entrar no joke jokeMake -> sem parametros: ver joke em branco
-- entrar no joke jokeMake -> com parametros: ver joke feito
-
 ssh luciano_bapo@funny-joke.ilhanet.com
 
 ssh testesdivertidos.com
