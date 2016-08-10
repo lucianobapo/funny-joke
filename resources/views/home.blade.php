@@ -4,7 +4,12 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            @include('unversioned.home')
+            @if(config('app.env')=='local')
+                @include('unversioned.home-dist')
+            @else
+                @include('unversioned.home')
+            @endif
+
         </div>
     </div>
 </div>

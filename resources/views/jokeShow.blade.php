@@ -26,7 +26,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            @include('unversioned.joke')
+            @if(config('app.env')=='local')
+                @include('unversioned.joke-dist')
+            @else
+                @include('unversioned.joke')
+            @endif
         </div>
     </div>
 </div>
