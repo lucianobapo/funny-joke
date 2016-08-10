@@ -1,4 +1,5 @@
 *
 !home-dist.blade.php
 !joke-dist.blade.php
+!navbar-dist.blade.php
 !.gitignore
