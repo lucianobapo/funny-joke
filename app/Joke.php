@@ -43,7 +43,7 @@ class Joke extends Model
     ];
 
     protected $validationRules = [
-        'title' => 'required|unique:jokes|max:255',
+        'title' => 'required|max:255',
         'file' => 'required',
     ];
 
