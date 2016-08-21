@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/{teste}', ['uses'=>'JokeController@show']);
+
 Route::get('/', 'HomeController@welcome');
 
 Route::get('/home', 'HomeController@welcome');
@@ -25,6 +27,8 @@ Route::get('auth/{provider}', ['as'=>'auth.redirect', 'uses'=>'Auth\AuthControll
 Route::get('auth/{provider}/callback', ['as'=>'auth.callback', 'uses'=>'Auth\AuthController@handleProviderCallback']);
 
 Route::resource('mandante', 'MandanteController');
+
+
 
 Route::resource('teste', 'JokeController', [
     'names' => [
