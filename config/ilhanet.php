@@ -10,6 +10,8 @@ return [
         'suporte.wellingtonmelo@gmail.com',
     ],
 
+    'googleAnalyticsId' => env('GOOGLE_ANALYTICS_ID', ''),
+
     //socialLogin configs
     'socialLogin' => [
 //        'availableProviders' => ['facebook','google'],
