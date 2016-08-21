@@ -64,6 +64,8 @@ trait TraitSocialite
      */
     public function handleProviderCallback($provider, Request $request)
     {
+        if (array_search($provider,config('ilhanet.socialLogin.availableProviders'))===false)
+        dd($provider);
         $user = $this->callSocialiteDriver($provider)->user();
         return $this->processSocialUser($provider, $user, $request);
 
