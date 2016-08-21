@@ -28,8 +28,6 @@ Route::get('auth/{provider}/callback', ['as'=>'auth.callback', 'uses'=>'Auth\Aut
 
 Route::resource('mandante', 'MandanteController');
 
-
-
 Route::resource('teste', 'JokeController', [
     'names' => [
         'index'=>'joke.index',
