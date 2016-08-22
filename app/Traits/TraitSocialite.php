@@ -67,10 +67,17 @@ trait TraitSocialite
         if (array_search($provider,config('ilhanet.socialLogin.availableProviders'))===false)
             dd($provider);
 
+        $state = $request->get('state');
+        $request->session()->put('state',$state);
+
+        if(\Auth::check()==false){
+            session()->regenerate();
+        }
+
         $abstractProvider = $this->callSocialiteDriver($provider);
 //        dd($abstractProvider);
         $user = $abstractProvider->user();
-        dd($user);
+//        dd($user);
         return $this->processSocialUser($provider, $user, $request);
 
         // OAuth Two Providers
