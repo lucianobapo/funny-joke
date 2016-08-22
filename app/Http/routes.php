@@ -13,7 +13,7 @@
 
 Route::auth();
 
-//Route::get('/{teste}', ['uses'=>'JokeController@show']);
+Route::get('/{teste}', ['uses'=>'JokeController@show']);
 
 Route::get('/', 'HomeController@welcome');
 
