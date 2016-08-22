@@ -68,7 +68,7 @@ trait TraitSocialite
             dd($provider);
 
         $abstractProvider = $this->callSocialiteDriver($provider);
-//        dd($abstractProvider);
+        dd($abstractProvider);
         $user = $abstractProvider->user();
         return $this->processSocialUser($provider, $user, $request);
 
