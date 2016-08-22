@@ -129,7 +129,7 @@ class AuthController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    protected function processSocialUser($provider, $socialUser, $request)
+    protected function processSocialUser($provider, $socialUser, Request $request)
     {
         $userFromDatabase = $this->userService->findFirst([
             'provider_name' => $provider,
@@ -236,5 +236,12 @@ class AuthController extends Controller
         }
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    public function logout()
+    {
+        Auth::guard($this->getGuard())->logout();
+dd(session());
+        return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }
 }
